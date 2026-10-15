@@ -125,7 +125,7 @@ footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--tra
 
 <header class="hero">
   <div class="mono or">N&amp;F</div>
-  <p class="ligne">Les familles ont la joie de vous convier au mariage de leurs enfants</p>
+  <p class="ligne">La grande famille Sawadogo a la joie de vous convier au mariage de ses enfants</p>
   <h1 class="or">Nathan<em>&amp;</em>Faouzio</h1>
   <p class="date">Samedi 28 novembre 2026</p>
   <p class="ville">Ouagadougou, Burkina Faso</p>
@@ -137,7 +137,6 @@ footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--tra
   </div>
   <div class="cta">
     <a class="btn" href="#rsvp">Confirmer ma présence</a>
-    <button class="btn ghost" id="cal">Ajouter au calendrier</button>
   </div>
 </header>
 
@@ -226,21 +225,6 @@ function tic() {
   $("cs").textContent = ("0" + Math.floor(d / 1000)).slice(-2);
 }
 tic(); setInterval(tic, 1000);
-
-// Ajouter au calendrier (.ics)
-$("cal").addEventListener("click", function () {
-  var ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Invitation//FR","BEGIN:VEVENT",
-    "UID:mariage-nathan-faouzio-20261128@invitation",
-    "DTSTAMP:20261001T000000Z","DTSTART:20261128T090000Z","DTEND:20261128T180000Z",
-    "SUMMARY:Mariage de Nathan et Faouzio",
-    "DESCRIPTION:09h00 Mairie de Saaba\\n10h00 Eglise centrale des Assemblees de Dieu de Saaba\\n12h30 Lunch d'honneur - salle Televideo (Dassasgho)",
-    "LOCATION:Saaba / Ouagadougou",
-    "END:VEVENT","END:VCALENDAR"].join("\r\n");
-  var a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
-  a.download = "mariage-nathan-faouzio.ics";
-  document.body.appendChild(a); a.click(); a.remove();
-});
 
 // RSVP -> envoi
 document.querySelectorAll('input[name="pres"]').forEach(function (r) {
