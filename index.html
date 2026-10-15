@@ -62,7 +62,8 @@ a{color:inherit}
 /* Hero */
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:4rem 1.4rem;
   background:radial-gradient(ellipse at 50% 0,#fff 0,var(--ivoire) 65%);border-bottom:1px solid var(--trait)}
-.mono{width:84px;height:84px;border-radius:50%;border:1px solid var(--or);display:grid;place-items:center;font:italic 1.7rem var(--serif);margin-bottom:1.6rem;outline:1px solid var(--or-clair);outline-offset:5px}
+.mono{width:84px;height:84px;border-radius:50%;border:1px solid var(--or);display:grid;place-items:center;font:italic 1.7rem var(--serif);margin-bottom:1.6rem;outline:1px solid var(--or-clair);outline-offset:5px;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;transition:transform .2s ease}
+.mono:active{transform:scale(.95)}
 .hero p.ligne{font:italic 1.3rem var(--serif);color:var(--doux);max-width:20em}
 .hero h1{font-size:clamp(3.4rem,17vw,7rem);margin:.5rem 0}
 .hero h1 em{display:block;font-size:.34em;font-weight:400;margin:.1em 0}
@@ -108,6 +109,20 @@ form .btn{justify-self:center;margin-top:.4rem}
 footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--trait)}
 .verset{max-width:34em;margin:0 auto 1.6rem;font:italic 1.15rem/1.5 var(--serif);color:var(--doux)}
 .signature{font:italic 2rem var(--serif)}
+
+/* ===== MODALE LOGIN ADMIN ===== */
+.admin-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:1.4rem;background:rgba(29,26,20,.85);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
+.admin-modal.open{opacity:1;visibility:visible}
+.admin-modal__box{background:var(--blanc);border-radius:12px;width:100%;max-width:400px;padding:2rem 1.8rem;box-shadow:0 30px 80px rgba(0,0,0,.5);border-top:4px solid var(--or);text-align:center;position:relative;transform:translateY(20px);transition:transform .35s cubic-bezier(.2,.7,.3,1)}
+.admin-modal.open .admin-modal__box{transform:translateY(0)}
+.admin-modal__close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:var(--ivoire);border:0;cursor:pointer;font-size:1rem;color:var(--doux);display:flex;align-items:center;justify-content:center;transition:background .2s}
+.admin-modal__close:hover{background:var(--or-clair);color:var(--nuit)}
+.admin-modal__icon{width:60px;height:60px;margin:0 auto .8rem;border-radius:50%;background:linear-gradient(135deg,var(--or-clair),var(--or));display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#fff;box-shadow:0 8px 22px rgba(184,146,74,.4)}
+.admin-modal h3{font-size:1.5rem;margin-bottom:.3rem;color:var(--encre)}
+.admin-modal__sub{font-size:.88rem;color:var(--doux);margin-bottom:1.4rem}
+.admin-modal input{text-align:center;font-size:1rem;letter-spacing:.02em}
+.admin-modal .btn{width:100%;margin-top:.6rem}
+.admin-modal__err{color:#a3352b;font-size:.85rem;min-height:1.2em;margin-top:.6rem}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -124,7 +139,7 @@ footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--tra
 </div>
 
 <header class="hero">
-  <div class="mono or">N&amp;F</div>
+  <div class="mono or" id="monoAdmin">N&amp;F</div>
   <p class="ligne">La grande famille Sawadogo a la joie de vous convier au mariage de ses enfants</p>
   <h1 class="or">Nathan<em>&amp;</em>Faouzio</h1>
   <p class="date">Samedi 28 novembre 2026</p>
@@ -197,6 +212,19 @@ footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--tra
   <p class="signature or">Nathan &amp; Faouzio</p>
 </footer>
 
+<!-- ===== MODALE LOGIN ADMIN ===== -->
+<div class="admin-modal" id="adminModal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+  <div class="admin-modal__box">
+    <button class="admin-modal__close" id="adminClose" aria-label="Fermer">✕</button>
+    <div class="admin-modal__icon">🔐</div>
+    <h3 id="adminTitle">Espace Admin</h3>
+    <p class="admin-modal__sub">Mariage Nathan &amp; Faouzio</p>
+    <input type="password" id="adminPwd" placeholder="Mot de passe" autocomplete="current-password">
+    <button class="btn" id="adminSubmit">Entrer</button>
+    <p class="admin-modal__err" id="adminErr"></p>
+  </div>
+</div>
+
 <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
 /* ===== À MODIFIER ===== */
@@ -209,6 +237,10 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 var db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 /* ==================== */
 
+/* ===== MOT DE PASSE ADMIN ===== */
+var ADMIN_PASSWORD = "Nathan-faouzia-2026";
+/* ============================== */
+
 var $ = function (id) { return document.getElementById(id); };
 
 // Ouverture de l'enveloppe
@@ -217,6 +249,54 @@ $("sceau").addEventListener("click", function () {
   $("env").classList.add("ouverte");
   document.body.classList.remove("locked");
   window.scrollTo(0, 0);
+});
+
+// ===== TRIPLE-CLIC SUR LE CERCLE N&F → MODALE ADMIN =====
+var clickCount = 0;
+var clickTimer = null;
+$("monoAdmin").addEventListener("click", function () {
+  clickCount++;
+  clearTimeout(clickTimer);
+  clickTimer = setTimeout(function () { clickCount = 0; }, 800);
+  if (clickCount >= 3) {
+    clickCount = 0;
+    openAdminModal();
+  }
+});
+
+function openAdminModal() {
+  $("adminModal").classList.add("open");
+  $("adminErr").textContent = "";
+  $("adminPwd").value = "";
+  setTimeout(function () { $("adminPwd").focus(); }, 250);
+}
+function closeAdminModal() {
+  $("adminModal").classList.remove("open");
+  $("adminPwd").value = "";
+  $("adminErr").textContent = "";
+}
+$("adminClose").addEventListener("click", closeAdminModal);
+$("adminModal").addEventListener("click", function (e) {
+  if (e.target === $("adminModal")) closeAdminModal();
+});
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" && $("adminModal").classList.contains("open")) closeAdminModal();
+});
+
+function tryAdminLogin() {
+  var pwd = $("adminPwd").value.trim();
+  if (pwd === ADMIN_PASSWORD) {
+    sessionStorage.setItem("nf_admin", "1");
+    window.location.href = "admin-mariage.html";
+  } else {
+    $("adminErr").textContent = "Mot de passe incorrect";
+    $("adminPwd").value = "";
+    $("adminPwd").focus();
+  }
+}
+$("adminSubmit").addEventListener("click", tryAdminLogin);
+$("adminPwd").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") tryAdminLogin();
 });
 
 // Compte à rebours (28 nov. 2026, 09h00 — heure du Burkina = UTC)
