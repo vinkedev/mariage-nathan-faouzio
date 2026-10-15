@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nathan &amp; Faouzio — Invitation de mariage</title>
+<meta name="description" content="Nathan et Faouzio vous invitent à leur mariage le samedi 28 novembre 2026 à Ouagadougou.">
+<meta property="og:title" content="Nathan & Faouzio — Invitation de mariage">
+<meta property="og:description" content="Samedi 28 novembre 2026 · Ouagadougou. Ouvrez votre invitation.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivoire:#fbf8f1; --blanc:#fff; --encre:#26221b; --nuit:#1d1a14; --doux:#6f6757;
+  --or:#b8924a; --or-clair:#e6cd8b; --or-fonce:#8a6a2c; --trait:#e7ddc4;
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Jost",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-weight:300;font-size:1rem;line-height:1.65;color:var(--encre);background:var(--ivoire);-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.1}
+.or{background:linear-gradient(135deg,var(--or-clair),var(--or) 50%,var(--or-fonce));-webkit-background-clip:text;background-clip:text;color:transparent}
+.wrap{max-width:720px;margin:0 auto;padding:0 1.4rem}
+a{color:inherit}
+.btn{display:inline-block;cursor:pointer;text-decoration:none;font:500 .95rem var(--sans);letter-spacing:.04em;padding:.85rem 1.8rem;border:1px solid var(--or-fonce);border-radius:999px;color:#fff;background:linear-gradient(135deg,var(--or),var(--or-fonce))}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--or-fonce)}
+.btn.sm{padding:.5rem 1.1rem;font-size:.85rem}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--or-clair);outline-offset:3px}
+
+/* Enveloppe d'ouverture */
+#enveloppe{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--nuit);transition:opacity .6s ease .9s,visibility 0s 1.5s}
+#enveloppe.ouverte{opacity:0;visibility:hidden;pointer-events:none}
+.env{position:relative;width:min(88vw,420px);aspect-ratio:1.5;perspective:900px;color:#fff}
+.env .corps{position:absolute;inset:0;background:linear-gradient(160deg,#f6efde,#e9dcbb);border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.env .rabat{position:absolute;left:0;right:0;top:0;height:58%;background:linear-gradient(180deg,#efe5c9,#e2d3ac);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .9s cubic-bezier(.6,0,.2,1);z-index:3}
+.env .carte{position:absolute;left:7%;right:7%;top:8%;bottom:8%;background:var(--blanc);display:grid;place-items:center;text-align:center;transition:transform .9s cubic-bezier(.6,0,.2,1) .5s;z-index:2;color:var(--encre)}
+.env .carte span{font:italic 1.1rem var(--serif);color:var(--doux)}
+.sceau{position:absolute;left:50%;top:58%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;z-index:4;cursor:pointer;border:0;
+  background:radial-gradient(circle at 35% 30%,#f1dc9c,#b8924a 60%,#7a5c22);box-shadow:0 4px 14px rgba(0,0,0,.4);font:italic 500 1.5rem var(--serif);color:#5a4216;transition:opacity .3s}
+.sceau:focus-visible{outline:3px solid #fff;outline-offset:4px}
+.env.ouverte .rabat{transform:rotateX(180deg)}
+.env.ouverte .carte{transform:translateY(-35%) scale(1.04)}
+.env.ouverte .sceau{opacity:0}
+.consigne{position:absolute;bottom:-3rem;left:0;right:0;text-align:center;font-size:.9rem;color:var(--or-clair);letter-spacing:.06em}
+
+/* Hero */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:4rem 1.4rem;
+  background:radial-gradient(ellipse at 50% 0,#fff 0,var(--ivoire) 65%);border-bottom:1px solid var(--trait)}
+.mono{width:84px;height:84px;border-radius:50%;border:1px solid var(--or);display:grid;place-items:center;font:italic 1.7rem var(--serif);margin-bottom:1.6rem;outline:1px solid var(--or-clair);outline-offset:5px}
+.hero p.ligne{font:italic 1.3rem var(--serif);color:var(--doux);max-width:20em}
+.hero h1{font-size:clamp(3.4rem,17vw,7rem);margin:.5rem 0}
+.hero h1 em{display:block;font-size:.34em;font-weight:400;margin:.1em 0}
+.hero .date{font:500 1.35rem var(--serif);color:var(--or-fonce);margin-top:1rem}
+.hero .ville{color:var(--doux)}
+.compte{display:flex;gap:.6rem;justify-content:center;margin:2rem 0 1.6rem}
+.compte div{min-width:70px;padding:.7rem .4rem;background:var(--blanc);border:1px solid var(--trait);border-radius:4px}
+.compte b{display:block;font:500 1.8rem var(--serif);color:var(--or-fonce);font-variant-numeric:tabular-nums}
+.compte span{font-size:.8rem;color:var(--doux)}
+.cta{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center}
+
+section{padding:4.5rem 0}
+section h2{font-size:clamp(2rem,8vw,2.8rem);text-align:center;margin-bottom:.6rem}
+.sous{text-align:center;color:var(--doux);margin-bottom:2.4rem}
+.trait{width:70px;height:1px;background:var(--or);margin:1rem auto 0}
+
+/* Familles */
+.familles{display:grid;gap:1.6rem;grid-template-columns:1fr;font-size:.98rem}
+@media(min-width:600px){.familles{grid-template-columns:1fr 1fr;gap:3rem}}
+.familles p+p{margin-top:.6rem}
+.familles strong{font-weight:500;color:var(--or-fonce)}
+.familles .col+.col{border-top:1px solid var(--trait);padding-top:1.6rem}
+@media(min-width:600px){.familles .col+.col{border-top:0;border-left:1px solid var(--trait);padding:0 0 0 3rem}}
+.invite{font:italic 1.5rem var(--serif);text-align:center;color:var(--or-fonce);margin:2.6rem auto 0;max-width:20em}
+
+/* Programme (section sombre, vraie chronologie) */
+.sombre{background:var(--nuit);color:#efe7d3}
+.sombre h2{color:var(--or-clair)}
+.sombre .sous{color:#b9ae94}
+.frise{list-style:none;position:relative;margin:0 auto;max-width:520px;padding-left:1.6rem}
+.frise::before{content:"";position:absolute;left:.35rem;top:.4rem;bottom:.4rem;width:1px;background:linear-gradient(var(--or),var(--or-fonce))}
+.frise li{position:relative;padding:0 0 2.4rem 1.2rem}
+.frise li:last-child{padding-bottom:0}
+.frise li::before{content:"";position:absolute;left:-1.55rem;top:.55rem;width:.7rem;height:.7rem;background:var(--or);transform:rotate(45deg)}
+.frise .h{font:500 2.1rem var(--serif);color:var(--or-clair);line-height:1}
+.frise h3{font-size:1.45rem;margin:.3rem 0 .15rem}
+.frise p{color:#c9bfa6}
+.frise .btn{margin-top:.8rem;color:var(--or-clair);border-color:var(--or)}
+
+/* RSVP */
+form{max-width:520px;margin:0 auto;display:grid;gap:1rem}
+label{display:grid;gap:.3rem;font-size:.9rem;color:var(--doux)}
+input,select,textarea{font:400 1rem var(--sans);color:var(--encre);padding:.8rem .9rem;background:var(--blanc);border:1px solid var(--trait);border-radius:4px;width:100%}
+.choix{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.choix label{position:relative}
+.choix input{position:absolute;opacity:0;width:0}
+.choix span{display:block;text-align:center;padding:.8rem;border:1px solid var(--trait);border-radius:4px;background:var(--blanc);cursor:pointer;color:var(--encre);font-size:1rem}
+.choix input:checked+span{border-color:var(--or-fonce);background:#fbf3de;color:var(--or-fonce);font-weight:500}
+.choix input:focus-visible+span{outline:3px solid var(--or-clair);outline-offset:2px}
+.erreur{color:#a3352b;font-size:.9rem;min-height:1.2em}
+form .btn{justify-self:center;margin-top:.4rem}
+
+footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--trait)}
+.verset{max-width:34em;margin:0 auto 1.6rem;font:italic 1.15rem/1.5 var(--serif);color:var(--doux)}
+.signature{font:italic 2rem var(--serif)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body class="locked">
+
+<div id="enveloppe" role="dialog" aria-label="Ouverture de l'invitation">
+  <div class="env" id="env">
+    <div class="corps"></div>
+    <div class="carte"><span>Vous êtes invités</span></div>
+    <div class="rabat"></div>
+    <button class="sceau" id="sceau" aria-label="Ouvrir l'invitation">N&amp;F</button>
+    <p class="consigne">Touchez le sceau pour ouvrir</p>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="mono or">N&amp;F</div>
+  <p class="ligne">Les familles ont la joie de vous convier au mariage de leurs enfants</p>
+  <h1 class="or">Nathan<em>&amp;</em>Faouzio</h1>
+  <p class="date">Samedi 28 novembre 2026</p>
+  <p class="ville">Ouagadougou, Burkina Faso</p>
+  <div class="compte" aria-hidden="true">
+    <div><b id="cj">0</b><span>jours</span></div>
+    <div><b id="ch">0</b><span>heures</span></div>
+    <div><b id="cm">0</b><span>min</span></div>
+    <div><b id="cs">0</b><span>sec</span></div>
+  </div>
+  <div class="cta">
+    <a class="btn" href="#rsvp">Confirmer ma présence</a>
+    <button class="btn ghost" id="cal">Ajouter au calendrier</button>
+  </div>
+</header>
+
+<section id="familles">
+  <div class="wrap">
+    <h2>Nos familles</h2>
+    <div class="trait"></div>
+    <p class="sous" style="margin-top:1rem">Réunies pour célébrer cette union</p>
+    <div class="familles">
+      <div class="col">
+        <p>Les grandes familles <strong>Ekoumé</strong>, Amezougné, Yeyevi et Bagnanzi, au Togo, en Allemagne et aux États-Unis.</p>
+        <p>La famille Tengué, au Togo et à Ouagadougou.</p>
+        <p>Les familles alliées et amies.</p>
+      </div>
+      <div class="col">
+        <p>La grande famille <strong>Savadogo</strong>, à Ouagadougou, Bamako, Paris et Bôh.</p>
+        <p>La famille de feu El Hadj Yabri Savadogo, à Ouagadougou, Ouahigouya et Zogoré.</p>
+        <p>La grande famille Ouédraogo, à Ouagadougou, Ouahigouya et au Canada.</p>
+        <p>La famille Adjamie, à Ouagadougou.</p>
+        <p>Les familles alliées et amies.</p>
+      </div>
+    </div>
+    <p class="invite">Ont la joie de vous convier au mariage de leurs enfants</p>
+  </div>
+</section>
+
+<section id="programme" class="sombre">
+  <div class="wrap">
+    <h2>Le programme</h2>
+    <p class="sous">Samedi 28 novembre 2026</p>
+    <ol class="frise">
+      <li>
+        <div class="h">09h00</div>
+        <h3>Cérémonie civile</h3>
+        <p>Mairie de Saaba</p>
+        <a class="btn ghost sm" data-carte="Mairie de Saaba Burkina Faso" target="_blank" rel="noopener">Voir l'itinéraire</a>
+      </li>
+      <li>
+        <div class="h">10h00</div>
+        <h3>Bénédiction nuptiale</h3>
+        <p>Église centrale des Assemblées de Dieu de Saaba</p>
+        <a class="btn ghost sm" data-carte="Eglise centrale Assemblées de Dieu Saaba Burkina Faso" target="_blank" rel="noopener">Voir l'itinéraire</a>
+      </li>
+      <li>
+        <div class="h">12h30</div>
+        <h3>Lunch d'honneur</h3>
+        <p>Offert à la salle Televideo, à Dassasgho, non loin de l'échangeur de l'Est</p>
+        <a class="btn ghost sm" data-carte="Salle Televideo Dassasgho Ouagadougou" target="_blank" rel="noopener">Voir l'itinéraire</a>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="rsvp">
+  <div class="wrap">
+    <h2>Confirmez votre présence</h2>
+    <div class="trait"></div>
+    <p class="sous" style="margin-top:1rem">Votre réponse nous aide à organiser l'accueil de chacun.</p>
+    <form id="form" novalidate>
+      <label>Nom et prénom
+        <input id="nom" autocomplete="name" placeholder="Ex. Awa Ouédraogo" required>
+      </label>
+      <div>
+        <div style="font-size:.9rem;color:var(--doux);margin-bottom:.3rem">Serez-vous des nôtres ?</div>
+        <div class="choix">
+          <label><input type="radio" name="pres" value="oui" checked><span>Avec joie</span></label>
+          <label><input type="radio" name="pres" value="non"><span>Je ne pourrai pas</span></label>
+        </div>
+      </div>
+      <label id="lbl-nb">Nombre de personnes (vous compris)
+        <select id="nb"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </label>
+      <label>Un mot pour les mariés (facultatif)
+        <textarea id="mot" rows="3"></textarea>
+      </label>
+      <p class="erreur" id="err" role="alert"></p>
+      <button class="btn" type="submit">Envoyer ma réponse sur WhatsApp</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p class="verset">« C'est pourquoi l'homme quittera son père et sa mère, et s'attachera à sa femme, et les deux deviendront une seule chair. Ainsi ils ne sont plus deux, mais ils sont une seule chair. Que l'homme donc ne sépare pas ce que Dieu a joint. » Mathieu 19:5-6</p>
+  <p class="signature or">Nathan &amp; Faouzio</p>
+  <p style="margin-top:1.4rem"><button class="btn ghost sm" id="partager">Partager l'invitation</button></p>
+</footer>
+
+<script>
+/* ===== À MODIFIER ===== */
+var WHATSAPP = "22600000000"; // numéro qui reçoit les réponses : indicatif + numéro, sans + ni espaces
+/* ====================== */
+
+var $ = function (id) { return document.getElementById(id); };
+
+// Ouverture de l'enveloppe
+$("sceau").addEventListener("click", function () {
+  $("enveloppe").classList.add("ouverte");
+  $("env").classList.add("ouverte");
+  document.body.classList.remove("locked");
+  window.scrollTo(0, 0);
+});
+
+// Itinéraires
+document.querySelectorAll("[data-carte]").forEach(function (a) {
+  a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(a.dataset.carte);
+});
+
+// Compte à rebours (28 nov. 2026, 09h00 — heure du Burkina = UTC)
+var cible = Date.UTC(2026, 10, 28, 9, 0, 0);
+function tic() {
+  var d = Math.max(0, cible - Date.now());
+  var j = Math.floor(d / 864e5); d -= j * 864e5;
+  var h = Math.floor(d / 36e5);  d -= h * 36e5;
+  var m = Math.floor(d / 6e4);   d -= m * 6e4;
+  $("cj").textContent = j;
+  $("ch").textContent = ("0" + h).slice(-2);
+  $("cm").textContent = ("0" + m).slice(-2);
+  $("cs").textContent = ("0" + Math.floor(d / 1000)).slice(-2);
+}
+tic(); setInterval(tic, 1000);
+
+// Ajouter au calendrier (.ics)
+$("cal").addEventListener("click", function () {
+  var ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Invitation//FR","BEGIN:VEVENT",
+    "UID:mariage-nathan-faouzio-20261128@invitation",
+    "DTSTAMP:20261001T000000Z","DTSTART:20261128T090000Z","DTEND:20261128T180000Z",
+    "SUMMARY:Mariage de Nathan et Faouzio",
+    "DESCRIPTION:09h00 Mairie de Saaba\\n10h00 Eglise centrale des Assemblees de Dieu de Saaba\\n12h30 Lunch d'honneur - salle Televideo (Dassasgho)",
+    "LOCATION:Saaba / Ouagadougou",
+    "END:VEVENT","END:VCALENDAR"].join("\r\n");
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+  a.download = "mariage-nathan-faouzio.ics";
+  document.body.appendChild(a); a.click(); a.remove();
+});
+
+// RSVP -> WhatsApp
+document.querySelectorAll('input[name="pres"]').forEach(function (r) {
+  r.addEventListener("change", function () {
+    var non = document.querySelector('input[name="pres"]:checked').value === "non";
+    $("lbl-nb").style.display = non ? "none" : "";
+  });
+});
+$("form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var nom = $("nom").value.trim();
+  if (!nom) { $("err").textContent = "Indiquez votre nom pour que nous puissions vous identifier."; $("nom").focus(); return; }
+  $("err").textContent = "";
+  var oui = document.querySelector('input[name="pres"]:checked').value === "oui";
+  var msg = "Bonjour, c'est " + nom + ". " +
+    (oui ? "Je confirme ma présence au mariage de Nathan et Faouzio (" + $("nb").value + " personne(s))."
+         : "Je ne pourrai malheureusement pas être présent(e) au mariage de Nathan et Faouzio.") +
+    ($("mot").value.trim() ? "\n\n" + $("mot").value.trim() : "");
+  window.open("https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg), "_blank");
+});
+
+// Partage
+$("partager").addEventListener("click", async function () {
+  var d = { title: "Mariage Nathan & Faouzio", text: "Vous êtes invités au mariage de Nathan et Faouzio, le samedi 28 novembre 2026 💍", url: location.href };
+  if (navigator.share) { try { await navigator.share(d); } catch (e) {} }
+  else window.open("https://wa.me/?text=" + encodeURIComponent(d.text + " " + d.url), "_blank");
+});
+</script>
+</body>
+</html>
