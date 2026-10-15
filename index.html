@@ -197,10 +197,17 @@ footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--tra
   <p class="signature or">Nathan &amp; Faouzio</p>
 </footer>
 
+<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
 /* ===== À MODIFIER ===== */
 var WHATSAPP = "22600000000"; // numéro qui reçoit les réponses : indicatif + numéro, sans + ni espaces
 /* ====================== */
+
+/* ===== SUPABASE ===== */
+var SUPABASE_URL = "https://otdiywrvzappbmjfkkyi.supabase.co";
+var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90ZGl5d3J2emFwcGJtamZra3lpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2MTQyMDcsImV4cCI6MjA4NTE5MDIwN30.O5gHqJF1SCvpu19Z0OFHhQsT_ZmeIFbuEu-bpBZXXtY";
+var db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+/* ==================== */
 
 var $ = function (id) { return document.getElementById(id); };
 
@@ -226,24 +233,59 @@ function tic() {
 }
 tic(); setInterval(tic, 1000);
 
-// RSVP -> envoi
+// RSVP -> Supabase + WhatsApp
 document.querySelectorAll('input[name="pres"]').forEach(function (r) {
   r.addEventListener("change", function () {
     var non = document.querySelector('input[name="pres"]:checked').value === "non";
     $("lbl-nb").style.display = non ? "none" : "";
   });
 });
-$("form").addEventListener("submit", function (e) {
+
+$("form").addEventListener("submit", async function (e) {
   e.preventDefault();
   var nom = $("nom").value.trim();
-  if (!nom) { $("err").textContent = "Indiquez votre nom pour que nous puissions vous identifier."; $("nom").focus(); return; }
+  if (!nom) {
+    $("err").textContent = "Indiquez votre nom pour que nous puissions vous identifier.";
+    $("nom").focus();
+    return;
+  }
   $("err").textContent = "";
+
   var oui = document.querySelector('input[name="pres"]:checked').value === "oui";
+  var nb = oui ? parseInt($("nb").value, 10) : 0;
+  var mot = $("mot").value.trim();
+
+  var btn = e.target.querySelector("button[type=submit]");
+  var originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "Envoi en cours…";
+
+  // 1) Enregistrer dans Supabase
+  try {
+    var res = await db.from("rsvp_mariage").insert({
+      nom: nom,
+      presence: oui,
+      nombre_personnes: nb,
+      mot: mot || null
+    });
+    if (res.error) throw res.error;
+    console.log("✅ RSVP enregistré dans Supabase");
+  } catch (err) {
+    console.error("❌ Erreur Supabase :", err);
+  }
+
+  // 2) Ouvrir WhatsApp (toujours, même si Supabase a échoué)
   var msg = "Bonjour, c'est " + nom + ". " +
-    (oui ? "Je confirme ma présence au mariage de Nathan et Faouzio (" + $("nb").value + " personne(s))."
-         : "Je ne pourrai malheureusement pas être présent(e) au mariage de Nathan et Faouzio.") +
-    ($("mot").value.trim() ? "\n\n" + $("mot").value.trim() : "");
+    (oui
+      ? "Je confirme ma présence au mariage de Nathan et Faouzio (" + nb + " personne(s))."
+      : "Je ne pourrai malheureusement pas être présent(e) au mariage de Nathan et Faouzio.") +
+    (mot ? "\n\n" + mot : "");
+
   window.open("https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg), "_blank");
+
+  // 3) Reset visuel
+  btn.disabled = false;
+  btn.textContent = originalLabel;
 });
 </script>
 </body>
