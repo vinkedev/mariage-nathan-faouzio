@@ -32,20 +32,32 @@ a{color:inherit}
 .btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--or-clair);outline-offset:3px}
 
 /* Enveloppe d'ouverture */
-#enveloppe{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--nuit);transition:opacity .6s ease .9s,visibility 0s 1.5s}
+#enveloppe{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;padding:2rem 1.4rem;background:var(--nuit);transition:opacity .6s ease .9s,visibility 0s 1.5s}
 #enveloppe.ouverte{opacity:0;visibility:hidden;pointer-events:none}
 .env{position:relative;width:min(88vw,420px);aspect-ratio:1.5;perspective:900px;color:#fff}
 .env .corps{position:absolute;inset:0;background:linear-gradient(160deg,#f6efde,#e9dcbb);border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .env .rabat{position:absolute;left:0;right:0;top:0;height:58%;background:linear-gradient(180deg,#efe5c9,#e2d3ac);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .9s cubic-bezier(.6,0,.2,1);z-index:3}
 .env .carte{position:absolute;left:7%;right:7%;top:8%;bottom:8%;background:var(--blanc);display:grid;place-items:center;text-align:center;transition:transform .9s cubic-bezier(.6,0,.2,1) .5s;z-index:2;color:var(--encre)}
 .env .carte span{font:italic 1.1rem var(--serif);color:var(--doux)}
-.sceau{position:absolute;left:50%;top:58%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;z-index:4;cursor:pointer;border:0;
-  background:radial-gradient(circle at 35% 30%,#f1dc9c,#b8924a 60%,#7a5c22);box-shadow:0 4px 14px rgba(0,0,0,.4);font:italic 500 1.5rem var(--serif);color:#5a4216;transition:opacity .3s}
+
+/* Sceau : bien visible + indices */
+.sceau{position:absolute;left:50%;top:58%;width:78px;height:78px;margin:-39px 0 0 -39px;border-radius:50%;z-index:4;cursor:pointer;border:0;
+  background:radial-gradient(circle at 35% 30%,#f1dc9c,#b8924a 60%,#7a5c22);box-shadow:0 4px 14px rgba(0,0,0,.4),0 0 0 0 rgba(230,205,139,.7);font:italic 500 1.5rem var(--serif);color:#5a4216;
+  transition:opacity .3s;animation:respire 2.1s ease-in-out infinite}
+.sceau::before,.sceau::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:1.5px solid rgba(230,205,139,.85);pointer-events:none;animation:onde 2.1s ease-out infinite}
+.sceau::after{animation-delay:1.05s}
 .sceau:focus-visible{outline:3px solid #fff;outline-offset:4px}
+@keyframes onde{0%{transform:scale(.82);opacity:.95}100%{transform:scale(1.55);opacity:0}}
+@keyframes respire{0%,100%{box-shadow:0 4px 14px rgba(0,0,0,.4),0 0 0 0 rgba(230,205,139,.55)}50%{box-shadow:0 4px 14px rgba(0,0,0,.4),0 0 22px 6px rgba(230,205,139,.45)}}
 .env.ouverte .rabat{transform:rotateX(180deg)}
 .env.ouverte .carte{transform:translateY(-35%) scale(1.04)}
 .env.ouverte .sceau{opacity:0}
-.consigne{position:absolute;bottom:-3rem;left:0;right:0;text-align:center;font-size:.9rem;color:var(--or-clair);letter-spacing:.06em}
+
+/* Consigne sous l'enveloppe */
+.consigne{max-width:22em;text-align:center;font-size:.98rem;letter-spacing:.05em;color:var(--or-clair);animation:scintille 1.9s ease-in-out infinite}
+.consigne .fleche{display:block;font-size:1.6rem;line-height:1;margin-bottom:.35rem;color:var(--or-clair);animation:monte 1.4s ease-in-out infinite}
+@keyframes monte{0%,100%{transform:translateY(2px);opacity:.55}50%{transform:translateY(-7px);opacity:1}}
+@keyframes scintille{0%,100%{opacity:.72}50%{opacity:1}}
 
 /* Hero */
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:4rem 1.4rem;
@@ -67,15 +79,6 @@ section h2{font-size:clamp(2rem,8vw,2.8rem);text-align:center;margin-bottom:.6re
 .sous{text-align:center;color:var(--doux);margin-bottom:2.4rem}
 .trait{width:70px;height:1px;background:var(--or);margin:1rem auto 0}
 
-/* Familles */
-.familles{display:grid;gap:1.6rem;grid-template-columns:1fr;font-size:.98rem}
-@media(min-width:600px){.familles{grid-template-columns:1fr 1fr;gap:3rem}}
-.familles p+p{margin-top:.6rem}
-.familles strong{font-weight:500;color:var(--or-fonce)}
-.familles .col+.col{border-top:1px solid var(--trait);padding-top:1.6rem}
-@media(min-width:600px){.familles .col+.col{border-top:0;border-left:1px solid var(--trait);padding:0 0 0 3rem}}
-.invite{font:italic 1.5rem var(--serif);text-align:center;color:var(--or-fonce);margin:2.6rem auto 0;max-width:20em}
-
 /* Programme (section sombre, vraie chronologie) */
 .sombre{background:var(--nuit);color:#efe7d3}
 .sombre h2{color:var(--or-clair)}
@@ -88,7 +91,6 @@ section h2{font-size:clamp(2rem,8vw,2.8rem);text-align:center;margin-bottom:.6re
 .frise .h{font:500 2.1rem var(--serif);color:var(--or-clair);line-height:1}
 .frise h3{font-size:1.45rem;margin:.3rem 0 .15rem}
 .frise p{color:#c9bfa6}
-.frise .btn{margin-top:.8rem;color:var(--or-clair);border-color:var(--or)}
 
 /* RSVP */
 form{max-width:520px;margin:0 auto;display:grid;gap:1rem}
@@ -106,7 +108,7 @@ form .btn{justify-self:center;margin-top:.4rem}
 footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--trait)}
 .verset{max-width:34em;margin:0 auto 1.6rem;font:italic 1.15rem/1.5 var(--serif);color:var(--doux)}
 .signature{font:italic 2rem var(--serif)}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body class="locked">
@@ -116,9 +118,9 @@ footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--tra
     <div class="corps"></div>
     <div class="carte"><span>Vous êtes invités</span></div>
     <div class="rabat"></div>
-    <button class="sceau" id="sceau" aria-label="Ouvrir l'invitation">N&amp;F</button>
-    <p class="consigne">Touchez le sceau pour ouvrir</p>
+    <button class="sceau" id="sceau" aria-label="Cliquez sur le sceau pour ouvrir l'invitation">N&amp;F</button>
   </div>
+  <p class="consigne"><span class="fleche">↑</span>Touchez le sceau doré « N&amp;F » pour ouvrir l'invitation</p>
 </div>
 
 <header class="hero">
@@ -139,29 +141,6 @@ footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--tra
   </div>
 </header>
 
-<section id="familles">
-  <div class="wrap">
-    <h2>Nos familles</h2>
-    <div class="trait"></div>
-    <p class="sous" style="margin-top:1rem">Réunies pour célébrer cette union</p>
-    <div class="familles">
-      <div class="col">
-        <p>Les grandes familles <strong>Ekoumé</strong>, Amezougné, Yeyevi et Bagnanzi, au Togo, en Allemagne et aux États-Unis.</p>
-        <p>La famille Tengué, au Togo et à Ouagadougou.</p>
-        <p>Les familles alliées et amies.</p>
-      </div>
-      <div class="col">
-        <p>La grande famille <strong>Savadogo</strong>, à Ouagadougou, Bamako, Paris et Bôh.</p>
-        <p>La famille de feu El Hadj Yabri Savadogo, à Ouagadougou, Ouahigouya et Zogoré.</p>
-        <p>La grande famille Ouédraogo, à Ouagadougou, Ouahigouya et au Canada.</p>
-        <p>La famille Adjamie, à Ouagadougou.</p>
-        <p>Les familles alliées et amies.</p>
-      </div>
-    </div>
-    <p class="invite">Ont la joie de vous convier au mariage de leurs enfants</p>
-  </div>
-</section>
-
 <section id="programme" class="sombre">
   <div class="wrap">
     <h2>Le programme</h2>
@@ -171,19 +150,16 @@ footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--tra
         <div class="h">09h00</div>
         <h3>Cérémonie civile</h3>
         <p>Mairie de Saaba</p>
-        <a class="btn ghost sm" data-carte="Mairie de Saaba Burkina Faso" target="_blank" rel="noopener">Voir l'itinéraire</a>
       </li>
       <li>
         <div class="h">10h00</div>
         <h3>Bénédiction nuptiale</h3>
         <p>Église centrale des Assemblées de Dieu de Saaba</p>
-        <a class="btn ghost sm" data-carte="Eglise centrale Assemblées de Dieu Saaba Burkina Faso" target="_blank" rel="noopener">Voir l'itinéraire</a>
       </li>
       <li>
         <div class="h">12h30</div>
         <h3>Lunch d'honneur</h3>
         <p>Offert à la salle Televideo, à Dassasgho, non loin de l'échangeur de l'Est</p>
-        <a class="btn ghost sm" data-carte="Salle Televideo Dassasgho Ouagadougou" target="_blank" rel="noopener">Voir l'itinéraire</a>
       </li>
     </ol>
   </div>
@@ -212,7 +188,7 @@ footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--tra
         <textarea id="mot" rows="3"></textarea>
       </label>
       <p class="erreur" id="err" role="alert"></p>
-      <button class="btn" type="submit">Envoyer ma réponse sur WhatsApp</button>
+      <button class="btn" type="submit">Envoyer</button>
     </form>
   </div>
 </section>
@@ -220,7 +196,6 @@ footer{text-align:center;padding:3rem 1.4rem 4rem;border-top:1px solid var(--tra
 <footer>
   <p class="verset">« C'est pourquoi l'homme quittera son père et sa mère, et s'attachera à sa femme, et les deux deviendront une seule chair. Ainsi ils ne sont plus deux, mais ils sont une seule chair. Que l'homme donc ne sépare pas ce que Dieu a joint. » Mathieu 19:5-6</p>
   <p class="signature or">Nathan &amp; Faouzio</p>
-  <p style="margin-top:1.4rem"><button class="btn ghost sm" id="partager">Partager l'invitation</button></p>
 </footer>
 
 <script>
@@ -236,11 +211,6 @@ $("sceau").addEventListener("click", function () {
   $("env").classList.add("ouverte");
   document.body.classList.remove("locked");
   window.scrollTo(0, 0);
-});
-
-// Itinéraires
-document.querySelectorAll("[data-carte]").forEach(function (a) {
-  a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(a.dataset.carte);
 });
 
 // Compte à rebours (28 nov. 2026, 09h00 — heure du Burkina = UTC)
@@ -272,7 +242,7 @@ $("cal").addEventListener("click", function () {
   document.body.appendChild(a); a.click(); a.remove();
 });
 
-// RSVP -> WhatsApp
+// RSVP -> envoi
 document.querySelectorAll('input[name="pres"]').forEach(function (r) {
   r.addEventListener("change", function () {
     var non = document.querySelector('input[name="pres"]:checked').value === "non";
@@ -290,13 +260,6 @@ $("form").addEventListener("submit", function (e) {
          : "Je ne pourrai malheureusement pas être présent(e) au mariage de Nathan et Faouzio.") +
     ($("mot").value.trim() ? "\n\n" + $("mot").value.trim() : "");
   window.open("https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg), "_blank");
-});
-
-// Partage
-$("partager").addEventListener("click", async function () {
-  var d = { title: "Mariage Nathan & Faouzio", text: "Vous êtes invités au mariage de Nathan et Faouzio, le samedi 28 novembre 2026 💍", url: location.href };
-  if (navigator.share) { try { await navigator.share(d); } catch (e) {} }
-  else window.open("https://wa.me/?text=" + encodeURIComponent(d.text + " " + d.url), "_blank");
 });
 </script>
 </body>
