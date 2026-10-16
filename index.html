@@ -39,8 +39,12 @@ a{color:inherit}
 .env{position:relative;width:min(88vw,420px);aspect-ratio:1.5;perspective:900px;color:#fff}
 .env .corps{position:absolute;inset:0;background:linear-gradient(160deg,#f6efde,#e9dcbb);border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .env .rabat{position:absolute;left:0;right:0;top:0;height:58%;background:linear-gradient(180deg,#efe5c9,#e2d3ac);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .9s cubic-bezier(.6,0,.2,1);z-index:3}
-.env .carte{position:absolute;left:7%;right:7%;top:8%;bottom:8%;background:var(--blanc);display:grid;place-items:center;text-align:center;transition:transform .9s cubic-bezier(.6,0,.2,1) .5s;z-index:2;color:var(--encre)}
-.env .carte span{font:italic 1.1rem var(--serif);color:var(--doux)}
+.env .carte{position:absolute;left:7%;right:7%;top:8%;bottom:8%;background:var(--blanc);display:flex;align-items:center;justify-content:center;padding:1.2rem 1rem;text-align:center;transition:transform .9s cubic-bezier(.6,0,.2,1) .5s;z-index:2;color:var(--encre)}
+.env .carte span{font:italic clamp(.9rem,3.6vw,1.15rem)/1.5 var(--serif);color:var(--doux);max-width:18em}
+.env .carte span strong{font-style:normal;font-weight:600;color:var(--or-fonce)}
+.env.ouverte .rabat{transform:rotateX(180deg)}
+.env.ouverte .carte{transform:translateY(-35%) scale(1.04)}
+.env.ouverte .sceau{opacity:0}
 
 /* Sceau */
 .sceau{position:absolute;left:50%;top:58%;width:78px;height:78px;margin:-39px 0 0 -39px;border-radius:50%;z-index:4;cursor:pointer;border:0;
@@ -51,9 +55,6 @@ a{color:inherit}
 .sceau:focus-visible{outline:3px solid #fff;outline-offset:4px}
 @keyframes onde{0%{transform:scale(.82);opacity:.95}100%{transform:scale(1.55);opacity:0}}
 @keyframes respire{0%,100%{box-shadow:0 4px 14px rgba(0,0,0,.4),0 0 0 0 rgba(230,205,139,.55)}50%{box-shadow:0 4px 14px rgba(0,0,0,.4),0 0 22px 6px rgba(230,205,139,.45)}}
-.env.ouverte .rabat{transform:rotateX(180deg)}
-.env.ouverte .carte{transform:translateY(-35%) scale(1.04)}
-.env.ouverte .sceau{opacity:0}
 
 .consigne{max-width:22em;text-align:center;font-size:.98rem;letter-spacing:.05em;color:var(--or-clair);animation:scintille 1.9s ease-in-out infinite}
 .consigne .fleche{display:block;font-size:1.6rem;line-height:1;margin-bottom:.35rem;color:var(--or-clair);animation:monte 1.4s ease-in-out infinite}
@@ -161,6 +162,7 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
   .env{width:min(92vw,420px)}
   .sceau{width:70px;height:70px;margin:-35px 0 0 -35px;font-size:1.35rem}
   .consigne{font-size:.9rem;padding:0 .8rem}
+  .env .carte span{font-size:.95rem}
 }
 
 @media (max-width:380px){
@@ -169,6 +171,7 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
   .compte span{font-size:.62rem}
   .env{width:94vw}
   .sceau{width:64px;height:64px;margin:-32px 0 0 -32px;font-size:1.25rem}
+  .env .carte span{font-size:.88rem}
 }
 
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
@@ -179,7 +182,9 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
 <div id="enveloppe" role="dialog" aria-label="Ouverture de l'invitation">
   <div class="env" id="env">
     <div class="corps"></div>
-    <div class="carte"><span>Vous êtes invités</span></div>
+    <div class="carte">
+      <span>Les grandes familles <strong>Ekoumé</strong> et <strong>Savadogo</strong> ont l'immense honneur de vous inviter au Mariage de leurs enfants</span>
+    </div>
     <div class="rabat"></div>
     <button class="sceau" id="sceau" aria-label="Cliquez sur le sceau pour ouvrir l'invitation">N&amp;F</button>
   </div>
@@ -188,7 +193,7 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
 
 <header class="hero">
   <div class="mono or" id="monoAdmin">N&amp;F</div>
-  <p class="ligne">La grande famille Sawadogo a la joie de vous convier au mariage de ses enfants</p>
+  <p class="ligne">Les grandes familles Ekoumé et Savadogo ont l'immense honneur de vous inviter au Mariage de leurs enfants</p>
   <h1 class="or">Nathan<em>&amp;</em>Faouzia</h1>
   <p class="date">Samedi 28 novembre 2026</p>
   <p class="ville">Ouagadougou, Burkina Faso</p>
