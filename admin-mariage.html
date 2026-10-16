@@ -2,49 +2,103 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Admin · RSVP Mariage Nathan & Faouzio</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--or:#b8924a;--or-fonce:#8a6a2c;--nuit:#1d1a14;--ivoire:#fbf8f1;--doux:#6f6757;--trait:#e7ddc4;--blanc:#fff;--vert:#2e8b57;--rouge:#b03a2e}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Jost',sans-serif;background:var(--ivoire);color:#26221b;padding:2rem 1.2rem;min-height:100vh}
+  :root{--or:#b8924a;--or-fonce:#8a6a2c;--or-clair:#e6cd8b;--nuit:#1d1a14;--ivoire:#fbf8f1;--doux:#6f6757;--trait:#e7ddc4;--blanc:#fff;--vert:#2e8b57;--rouge:#b03a2e}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:'Jost',sans-serif;background:var(--ivoire);color:#26221b;min-height:100vh;padding:1.4rem 1rem calc(1.4rem + env(safe-area-inset-bottom));font-size:16px}
   h1,h2{font-family:'Cormorant Garamond',serif;font-weight:500}
-  h1{text-align:center;font-size:2rem;margin-bottom:.3rem}
-  .sub{text-align:center;color:var(--doux);margin-bottom:2rem;font-size:.95rem}
+  h1{text-align:center;font-size:clamp(1.5rem,6vw,2rem);margin-bottom:.3rem;line-height:1.15}
+  .sub{text-align:center;color:var(--doux);margin-bottom:1.4rem;font-size:clamp(.82rem,3.4vw,.95rem)}
   .wrap{max-width:1100px;margin:0 auto}
-  .gate{max-width:360px;margin:6rem auto;background:#fff;padding:2.2rem;border-radius:10px;box-shadow:0 20px 50px rgba(0,0,0,.08);text-align:center}
-  .gate h2{margin-bottom:1rem}
-  .gate input{width:100%;padding:.8rem;border:1px solid var(--trait);border-radius:6px;font:1rem 'Jost',sans-serif;margin-bottom:1rem;text-align:center}
-  .gate button{width:100%;padding:.8rem;border:0;border-radius:6px;background:linear-gradient(135deg,var(--or),var(--or-fonce));color:#fff;font:500 1rem 'Jost',sans-serif;cursor:pointer}
+
+  /* ===== ÉCRAN MOT DE PASSE ===== */
+  .gate{max-width:380px;margin:clamp(2rem,12vh,6rem) auto 0;background:#fff;padding:2rem 1.5rem;border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,.08);text-align:center}
+  .gate .icon{width:56px;height:56px;margin:0 auto .8rem;border-radius:50%;background:linear-gradient(135deg,var(--or-clair),var(--or));display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 8px 20px rgba(184,146,74,.35)}
+  .gate h2{margin-bottom:.3rem;font-size:1.5rem}
+  .gate p.role{color:var(--doux);font-size:.88rem;margin-bottom:1.4rem}
+  .gate input{width:100%;padding:.9rem;border:1px solid var(--trait);border-radius:8px;font:1rem 'Jost',sans-serif;margin-bottom:.9rem;text-align:center;background:var(--ivoire)}
+  .gate input:focus{outline:none;border-color:var(--or-fonce);background:#fff}
+  .gate button{width:100%;padding:.9rem;border:0;border-radius:8px;background:linear-gradient(135deg,var(--or),var(--or-fonce));color:#fff;font:500 1rem 'Jost',sans-serif;cursor:pointer;letter-spacing:.04em}
+  .gate button:active{transform:scale(.98)}
   .gate .err{color:var(--rouge);font-size:.85rem;min-height:1.2em;margin-top:.6rem}
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.6rem}
-  .stat{background:#fff;border:1px solid var(--trait);border-radius:10px;padding:1.2rem;text-align:center}
-  .stat b{display:block;font:600 2rem 'Cormorant Garamond',serif;color:var(--or-fonce);font-variant-numeric:tabular-nums}
-  .stat span{font-size:.82rem;color:var(--doux);letter-spacing:.04em}
-  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;gap:1rem;flex-wrap:wrap}
-  .toolbar input{padding:.55rem .8rem;border:1px solid var(--trait);border-radius:6px;font:1rem 'Jost',sans-serif;min-width:220px}
-  .toolbar button{padding:.55rem 1rem;border:0;border-radius:6px;background:var(--nuit);color:#fff;cursor:pointer;font:500 .9rem 'Jost',sans-serif}
-  table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+
+  /* ===== BARRE OUTILS ===== */
+  .toolbar{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.2rem}
+  .toolbar .row1{display:flex;gap:.5rem}
+  .toolbar .row1 button{flex:1;padding:.75rem 1rem;border:0;border-radius:8px;background:var(--nuit);color:#fff;cursor:pointer;font:500 .9rem 'Jost',sans-serif;letter-spacing:.03em}
+  .toolbar .row1 .logout{background:transparent;border:1px solid var(--trait);color:var(--doux);font-weight:400}
+  .toolbar .row1 button:active{transform:scale(.97)}
+  .toolbar input{width:100%;padding:.75rem .9rem;border:1px solid var(--trait);border-radius:8px;font:1rem 'Jost',sans-serif;background:#fff}
+  .toolbar input:focus{outline:none;border-color:var(--or-fonce)}
+  .counter{text-align:center;font-size:.85rem;color:var(--doux);margin-bottom:.8rem}
+  .counter b{color:var(--or-fonce);font-weight:500}
+
+  /* ===== TABLEAU (desktop) ===== */
+  .table-wrap{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+  table{width:100%;border-collapse:collapse}
   th{background:var(--nuit);color:#fff;text-align:left;padding:.85rem;font-weight:500;font-size:.85rem;letter-spacing:.04em}
   td{padding:.85rem;border-bottom:1px solid var(--trait);font-size:.92rem;vertical-align:top}
   tr:last-child td{border-bottom:0}
-  .badge{display:inline-block;padding:.25rem .7rem;border-radius:999px;font-size:.78rem;font-weight:500}
+  .badge{display:inline-block;padding:.25rem .7rem;border-radius:999px;font-size:.78rem;font-weight:500;white-space:nowrap}
   .badge--oui{background:rgba(46,139,87,.12);color:var(--vert)}
   .badge--non{background:rgba(176,58,46,.12);color:var(--rouge)}
   .mot{color:var(--doux);font-style:italic;font-size:.88rem;max-width:340px}
-  .empty{text-align:center;padding:2.5rem;color:var(--doux)}
-  .logout{background:transparent;border:1px solid var(--trait);color:var(--doux);padding:.5rem 1rem;border-radius:6px;cursor:pointer;font:400 .85rem 'Jost',sans-serif}
-  .logout:hover{border-color:var(--or-fonce);color:var(--or-fonce)}
+  .empty{text-align:center;padding:2.5rem 1rem;color:var(--doux);font-size:.92rem}
+  .loading{text-align:center;padding:2.5rem 1rem;color:var(--doux)}
+
+  /* ===== MOBILE : cartes ===== */
+  @media (max-width:720px){
+    body{padding:1.2rem .9rem calc(1.2rem + env(safe-area-inset-bottom))}
+    .table-wrap{background:transparent;box-shadow:none;border-radius:0;overflow:visible}
+    table,thead,tbody,tr,td{display:block;width:100%}
+    thead{display:none}
+    table{background:transparent}
+    tbody{display:flex;flex-direction:column;gap:.75rem}
+    tr{background:#fff;border-radius:12px;padding:1rem;box-shadow:0 4px 14px rgba(0,0,0,.05);border-left:3px solid var(--or);position:relative}
+    tr.absent{border-left-color:var(--rouge)}
+    td{border:0;padding:0;margin-bottom:.4rem;font-size:.9rem}
+    td:last-child{margin-bottom:0}
+    /* Ligne 1 : Nom */
+    td:nth-child(2){font-size:1.05rem;font-family:'Cormorant Garamond',serif;font-weight:500;color:var(--nuit);margin-bottom:.5rem;padding-right:80px}
+    /* Ligne Date : en haut à droite */
+    td:nth-child(1){position:absolute;top:1rem;right:1rem;font-size:.72rem;color:var(--doux);margin:0}
+    /* Présence + Personnes : sur la même ligne */
+    td:nth-child(3){display:inline-block;margin-right:.5rem}
+    td:nth-child(4){display:inline-block;color:var(--doux);font-size:.85rem;margin-bottom:.6rem}
+    td:nth-child(4)::before{content:"👥 "}
+    /* Message */
+    td:nth-child(5){background:var(--ivoire);padding:.7rem .85rem;border-radius:8px;max-width:none;color:var(--encre);font-style:italic;font-size:.88rem}
+    td:nth-child(5):empty{display:none}
+    .mot:empty{display:none}
+  }
+
+  @media (max-width:360px){
+    body{padding:1rem .7rem}
+    h1{font-size:1.35rem}
+    .gate{padding:1.5rem 1.2rem}
+  }
+
+  /* Impression */
+  @media print{
+    body{background:#fff;padding:0}
+    .gate,.toolbar,.counter{display:none !important}
+    table{box-shadow:none}
+    th{background:#eee;color:#000}
+  }
 </style>
 </head>
 <body>
 
 <!-- ====== ÉCRAN MOT DE PASSE ====== -->
 <div class="gate" id="gate">
+  <div class="icon">🔐</div>
   <h2>Espace Admin</h2>
-  <p style="color:var(--doux);font-size:.9rem;margin-bottom:1.2rem">Mariage Nathan &amp; Faouzio</p>
-  <input type="password" id="pwd" placeholder="Mot de passe" autocomplete="current-password">
+  <p class="role">Mariage Nathan &amp; Faouzio</p>
+  <input type="password" id="pwd" placeholder="Mot de passe" autocomplete="current-password" inputmode="text">
   <button id="loginBtn">Entrer</button>
   <p class="err" id="gateErr"></p>
 </div>
@@ -54,28 +108,30 @@
   <h1>Réponses des invités</h1>
   <p class="sub">Mariage Nathan &amp; Faouzio · 28 novembre 2026</p>
 
-  <div class="stats" id="stats"></div>
-
   <div class="toolbar">
-    <input type="search" id="search" placeholder="Rechercher un nom…">
-    <div style="display:flex;gap:.5rem">
+    <div class="row1">
       <button id="refreshBtn">↻ Rafraîchir</button>
       <button class="logout" id="logoutBtn">Déconnexion</button>
     </div>
+    <input type="search" id="search" placeholder="🔍 Rechercher un nom…" autocomplete="off">
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Nom</th>
-        <th>Présence</th>
-        <th>Pers.</th>
-        <th>Message</th>
-      </tr>
-    </thead>
-    <tbody id="rows"></tbody>
-  </table>
+  <p class="counter" id="counter"></p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Nom</th>
+          <th>Présence</th>
+          <th>Pers.</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
 </div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -83,7 +139,7 @@
 /* ===== CONFIG ===== */
 var SUPABASE_URL = "https://otdiywrvzappbmjfkkyi.supabase.co";
 var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90ZGl5d3J2emFwcGJtamZra3lpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2MTQyMDcsImV4cCI6MjA4NTE5MDIwN30.O5gHqJF1SCvpu19Z0OFHhQsT_ZmeIFbuEu-bpBZXXtY";
-var ADMIN_PWD = "nathan2026"; // ⚠️ à changer
+var ADMIN_PWD = "Nathan-faouzia-2026"; // doit être identique à celui du site
 /* ================== */
 
 var db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -98,6 +154,7 @@ function tryLogin(){
   } else {
     $("gateErr").textContent = "Mot de passe incorrect";
     $("pwd").value = "";
+    $("pwd").focus();
   }
 }
 $("loginBtn").addEventListener("click", tryLogin);
@@ -116,7 +173,7 @@ $("logoutBtn").addEventListener("click", function(){
 
 /* ===== CHARGEMENT ===== */
 async function loadData(){
-  $("rows").innerHTML = '<tr><td colspan="5" class="empty">Chargement…</td></tr>';
+  $("rows").innerHTML = '<tr><td colspan="5" class="loading">Chargement…</td></tr>';
   var res = await db.from("rsvp_mariage").select("*").order("created_at", { ascending: false });
   if(res.error){
     console.error(res.error);
@@ -124,22 +181,18 @@ async function loadData(){
     return;
   }
   DATA = res.data || [];
-  renderStats();
+  updateCounter(DATA);
   renderRows(DATA);
 }
 
-/* ===== STATS ===== */
-function renderStats(){
-  var total = DATA.length;
-  var oui = DATA.filter(function(r){ return r.presence; });
-  var non = total - oui.length;
-  var personnes = oui.reduce(function(s, r){ return s + (r.nombre_personnes || 0); }, 0);
-
-  $("stats").innerHTML =
-    '<div class="stat"><b>' + total + '</b><span>Réponses</span></div>' +
-    '<div class="stat"><b>' + oui.length + '</b><span>Présents</span></div>' +
-    '<div class="stat"><b>' + non + '</b><span>Absents</span></div>' +
-    '<div class="stat"><b>' + personnes + '</b><span>Total personnes</span></div>';
+function updateCounter(list){
+  var total = list.length;
+  var presents = list.filter(function(r){ return r.presence; }).length;
+  var personnes = list.filter(function(r){ return r.presence; })
+                      .reduce(function(s,r){ return s + (r.nombre_personnes || 0); }, 0);
+  $("counter").innerHTML = '<b>' + total + '</b> réponse' + (total > 1 ? 's' : '') +
+    ' · <b>' + presents + '</b> présent' + (presents > 1 ? 's' : '') +
+    ' · <b>' + personnes + '</b> personne' + (personnes > 1 ? 's' : '');
 }
 
 /* ===== TABLEAU ===== */
@@ -149,13 +202,15 @@ function renderRows(list){
     return;
   }
   $("rows").innerHTML = list.map(function(r){
-    var d = new Date(r.created_at).toLocaleDateString("fr-FR", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit" });
-    return '<tr>' +
-      '<td>' + d + '</td>' +
+    var d = new Date(r.created_at).toLocaleDateString("fr-FR", { day:"2-digit", month:"2-digit", year:"numeric" });
+    var h = new Date(r.created_at).toLocaleTimeString("fr-FR", { hour:"2-digit", minute:"2-digit" });
+    var motTxt = r.mot ? escapeHtml(r.mot) : '';
+    return '<tr class="' + (r.presence ? '' : 'absent') + '">' +
+      '<td>' + d + ' · ' + h + '</td>' +
       '<td><strong>' + escapeHtml(r.nom) + '</strong></td>' +
       '<td><span class="badge ' + (r.presence ? 'badge--oui' : 'badge--non') + '">' + (r.presence ? 'Présent(e)' : 'Absent(e)') + '</span></td>' +
       '<td>' + (r.presence ? r.nombre_personnes : '—') + '</td>' +
-      '<td class="mot">' + (r.mot ? escapeHtml(r.mot) : '—') + '</td>' +
+      '<td class="mot">' + (motTxt || '—') + '</td>' +
     '</tr>';
   }).join("");
 }
@@ -169,8 +224,11 @@ function escapeHtml(s){
 /* ===== RECHERCHE ===== */
 $("search").addEventListener("input", function(e){
   var q = e.target.value.toLowerCase().trim();
-  if(!q){ renderRows(DATA); return; }
-  renderRows(DATA.filter(function(r){ return r.nom.toLowerCase().indexOf(q) !== -1; }));
+  var filtered = !q ? DATA : DATA.filter(function(r){
+    return r.nom.toLowerCase().indexOf(q) !== -1;
+  });
+  updateCounter(filtered);
+  renderRows(filtered);
 });
 
 $("refreshBtn").addEventListener("click", loadData);
