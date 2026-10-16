@@ -96,9 +96,11 @@ section h2{font-size:clamp(1.9rem,7vw,2.8rem);text-align:center;margin-bottom:.6
 .frise .h{font:500 clamp(1.7rem,6.5vw,2.1rem) var(--serif);color:var(--or-clair);line-height:1}
 .frise h3{font-size:clamp(1.2rem,4.6vw,1.45rem);margin:.3rem 0 .15rem}
 .frise p{color:#c9bfa6;font-size:clamp(.9rem,3.6vw,1rem)}
-.frise .lieu{display:inline-flex;align-items:center;gap:.4rem;color:#c9bfa6;text-decoration:none;border-bottom:1px dashed rgba(184,146,74,.5);padding-bottom:1px;transition:color .2s,border-color .2s}
-.frise .lieu:hover,.frise .lieu:active{color:var(--or-clair);border-color:var(--or-clair)}
-.frise .lieu::after{content:"↗";font-size:.75rem;opacity:.6}
+
+/* Bouton localisation */
+.map-btn{display:inline-flex;align-items:center;gap:.4rem;margin-top:.7rem;padding:.45rem .95rem;font:500 .82rem var(--sans);letter-spacing:.03em;color:var(--or-clair);background:rgba(184,146,74,.12);border:1px solid rgba(184,146,74,.45);border-radius:999px;text-decoration:none;transition:all .2s ease;-webkit-tap-highlight-color:transparent}
+.map-btn:hover,.map-btn:active{background:rgba(184,146,74,.25);border-color:var(--or-clair);color:#fff;transform:translateY(-1px)}
+.map-btn span{font-size:.9rem;line-height:1}
 
 /* RSVP */
 form{max-width:520px;margin:0 auto;display:grid;gap:1rem;padding:0 .2rem}
@@ -139,7 +141,7 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
 .admin-modal .btn{width:100%;margin-top:.6rem;min-height:48px}
 .admin-modal__err{color:#a3352b;font-size:.85rem;min-height:1.2em;margin-top:.6rem}
 
-/* ====== MOBILE SPECIFIQUE ====== */
+/* ====== MOBILE ====== */
 @media (max-width:600px){
   .wrap{padding:0 1.1rem}
   section{padding:3.2rem 0}
@@ -153,6 +155,7 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
   .frise li{padding:0 0 2rem 1rem}
   .frise li::before{left:-1.25rem}
   .frise::before{left:.3rem}
+  .map-btn{font-size:.78rem;padding:.4rem .85rem}
   form{padding:0}
   .choix span{padding:.85rem .5rem}
   .env{width:min(92vw,420px)}
@@ -208,17 +211,26 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
       <li>
         <div class="h">09h00</div>
         <h3>Cérémonie civile</h3>
-        <p><a class="lieu" href="https://www.google.com/maps/search/?api=1&query=Mairie+de+Saaba+Burkina+Faso" target="_blank" rel="noopener">Mairie de Saaba</a></p>
+        <p>Mairie de Saaba</p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Mairie+de+Saaba+Burkina+Faso" target="_blank" rel="noopener">
+          <span>📍</span> Voir la localisation
+        </a>
       </li>
       <li>
         <div class="h">10h00</div>
         <h3>Bénédiction nuptiale</h3>
-        <p><a class="lieu" href="https://www.google.com/maps/place/9HFJ%2B6CG+AD+Saaba+Eglise+centrale,+Ouagadougou/@12.3730687,-1.4189239,16z" target="_blank" rel="noopener">Église centrale des Assemblées de Dieu de Saaba</a></p>
+        <p>Église centrale des Assemblées de Dieu de Saaba</p>
+        <a class="map-btn" href="https://www.google.com/maps/place/9HFJ%2B6CG+AD+Saaba+Eglise+centrale,+Ouagadougou/@12.3730687,-1.4189239,16z" target="_blank" rel="noopener">
+          <span>📍</span> Voir la localisation
+        </a>
       </li>
       <li>
         <div class="h">12h30</div>
         <h3>Lunch d'honneur</h3>
-        <p><a class="lieu" href="https://www.google.com/maps/place/9GMM%2B56V+Tele-Vie-Deo,+Av.+du+Mus%C3%A9e+national,+Dassasgo,+Ouagadougou/@12.3829973,-1.4669594,17z" target="_blank" rel="noopener">Salle Televideo · Dassasgho</a></p>
+        <p>Salle Televideo, Dassasgho</p>
+        <a class="map-btn" href="https://www.google.com/maps/place/9GMM%2B56V+Tele-Vie-Deo,+Av.+du+Mus%C3%A9e+national,+Dassasgo,+Ouagadougou/@12.3829973,-1.4669594,17z" target="_blank" rel="noopener">
+          <span>📍</span> Voir la localisation
+        </a>
       </li>
     </ol>
   </div>
@@ -361,7 +373,7 @@ document.querySelectorAll('input[name="pres"]').forEach(function (r) {
   });
 });
 
-// ===== RSVP → UNIQUEMENT SUPABASE =====
+// ===== RSVP → SUPABASE =====
 $("form").addEventListener("submit", async function (e) {
   e.preventDefault();
 
@@ -394,12 +406,10 @@ $("form").addEventListener("submit", async function (e) {
 
     if (res.error) throw res.error;
 
-    // ✅ Succès
     console.log("✅ RSVP enregistré dans Supabase");
     $("err").className = "erreur success";
     $("err").textContent = "✅ Votre réponse a bien été enregistrée. Merci !";
 
-    // Reset du formulaire
     $("nom").value = "";
     $("mot").value = "";
     $("nb").value = "1";
@@ -407,7 +417,6 @@ $("form").addEventListener("submit", async function (e) {
     $("lbl-nb").style.display = "";
 
   } catch (err) {
-    // ❌ Erreur
     console.error("❌ Erreur Supabase :", err);
     $("err").className = "erreur error";
     $("err").textContent = "❌ Une erreur est survenue. Merci de réessayer ou de contacter la famille.";
