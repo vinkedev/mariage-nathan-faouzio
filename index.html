@@ -96,6 +96,9 @@ section h2{font-size:clamp(1.9rem,7vw,2.8rem);text-align:center;margin-bottom:.6
 .frise .h{font:500 clamp(1.7rem,6.5vw,2.1rem) var(--serif);color:var(--or-clair);line-height:1}
 .frise h3{font-size:clamp(1.2rem,4.6vw,1.45rem);margin:.3rem 0 .15rem}
 .frise p{color:#c9bfa6;font-size:clamp(.9rem,3.6vw,1rem)}
+.frise .lieu{display:inline-flex;align-items:center;gap:.4rem;color:#c9bfa6;text-decoration:none;border-bottom:1px dashed rgba(184,146,74,.5);padding-bottom:1px;transition:color .2s,border-color .2s}
+.frise .lieu:hover,.frise .lieu:active{color:var(--or-clair);border-color:var(--or-clair)}
+.frise .lieu::after{content:"↗";font-size:.75rem;opacity:.6}
 
 /* RSVP */
 form{max-width:520px;margin:0 auto;display:grid;gap:1rem;padding:0 .2rem}
@@ -111,8 +114,11 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--or-fonce
 .choix span:active{transform:scale(.97)}
 .choix input:checked+span{border-color:var(--or-fonce);background:#fbf3de;color:var(--or-fonce);font-weight:500}
 .choix input:focus-visible+span{outline:3px solid var(--or-clair);outline-offset:2px}
-.erreur{color:#a3352b;font-size:.9rem;min-height:1.2em}
+.erreur{font-size:.92rem;min-height:1.4em;text-align:center;transition:color .2s}
+.erreur.error{color:#a3352b}
+.erreur.success{color:#2e8b57;font-weight:500}
 form .btn{justify-self:center;margin-top:.4rem;min-height:48px;padding:.95rem 2.2rem}
+form .btn:disabled{opacity:.6;cursor:wait}
 
 footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-bottom));border-top:1px solid var(--trait)}
 .verset{max-width:34em;margin:0 auto 1.6rem;font:italic clamp(1rem,4vw,1.15rem)/1.55 var(--serif);color:var(--doux);padding:0 .3rem}
@@ -154,7 +160,6 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
   .consigne{font-size:.9rem;padding:0 .8rem}
 }
 
-/* ====== TRÈS PETITS ÉCRANS ====== */
 @media (max-width:380px){
   .hero h1{font-size:clamp(2.2rem,13vw,3rem)}
   .compte b{font-size:1.35rem}
@@ -203,17 +208,17 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
       <li>
         <div class="h">09h00</div>
         <h3>Cérémonie civile</h3>
-        <p>Mairie de Saaba</p>
+        <p><a class="lieu" href="https://www.google.com/maps/search/?api=1&query=Mairie+de+Saaba+Burkina+Faso" target="_blank" rel="noopener">Mairie de Saaba</a></p>
       </li>
       <li>
         <div class="h">10h00</div>
         <h3>Bénédiction nuptiale</h3>
-        <p>Église centrale des Assemblées de Dieu de Saaba</p>
+        <p><a class="lieu" href="https://www.google.com/maps/place/9HFJ%2B6CG+AD+Saaba+Eglise+centrale,+Ouagadougou/@12.3730687,-1.4189239,16z" target="_blank" rel="noopener">Église centrale des Assemblées de Dieu de Saaba</a></p>
       </li>
       <li>
         <div class="h">12h30</div>
         <h3>Lunch d'honneur</h3>
-        <p>Offert à la salle Televideo, à Dassasgho, non loin de l'échangeur de l'Est</p>
+        <p><a class="lieu" href="https://www.google.com/maps/place/9GMM%2B56V+Tele-Vie-Deo,+Av.+du+Mus%C3%A9e+national,+Dassasgo,+Ouagadougou/@12.3829973,-1.4669594,17z" target="_blank" rel="noopener">Salle Televideo · Dassasgho</a></p>
       </li>
     </ol>
   </div>
@@ -267,15 +272,10 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
 
 <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
-/* ===== À MODIFIER ===== */
-var WHATSAPP = "22600000000"; // numéro qui reçoit les réponses : indicatif + numéro, sans + ni espaces
-/* ====================== */
-
 /* ===== SUPABASE ===== */
 var SUPABASE_URL = "https://otdiywrvzappbmjfkkyi.supabase.co";
 var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90ZGl5d3J2emFwcGJtamZra3lpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2MTQyMDcsImV4cCI6MjA4NTE5MDIwN30.O5gHqJF1SCvpu19Z0OFHhQsT_ZmeIFbuEu-bpBZXXtY";
 var db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-/* ==================== */
 
 /* ===== MOT DE PASSE ADMIN ===== */
 var ADMIN_PASSWORD = "Nathan-faouzia-2026";
@@ -353,7 +353,7 @@ function tic() {
 }
 tic(); setInterval(tic, 1000);
 
-// RSVP -> Supabase + WhatsApp
+// Choix "je ne pourrai pas" → cache le nombre de personnes
 document.querySelectorAll('input[name="pres"]').forEach(function (r) {
   r.addEventListener("change", function () {
     var non = document.querySelector('input[name="pres"]:checked').value === "non";
@@ -361,15 +361,17 @@ document.querySelectorAll('input[name="pres"]').forEach(function (r) {
   });
 });
 
+// ===== RSVP → UNIQUEMENT SUPABASE =====
 $("form").addEventListener("submit", async function (e) {
   e.preventDefault();
+
   var nom = $("nom").value.trim();
   if (!nom) {
+    $("err").className = "erreur error";
     $("err").textContent = "Indiquez votre nom pour que nous puissions vous identifier.";
     $("nom").focus();
     return;
   }
-  $("err").textContent = "";
 
   var oui = document.querySelector('input[name="pres"]:checked').value === "oui";
   var nb = oui ? parseInt($("nb").value, 10) : 0;
@@ -379,6 +381,8 @@ $("form").addEventListener("submit", async function (e) {
   var originalLabel = btn.textContent;
   btn.disabled = true;
   btn.textContent = "Envoi en cours…";
+  $("err").textContent = "";
+  $("err").className = "erreur";
 
   try {
     var res = await db.from("rsvp_mariage").insert({
@@ -387,19 +391,27 @@ $("form").addEventListener("submit", async function (e) {
       nombre_personnes: nb,
       mot: mot || null
     });
+
     if (res.error) throw res.error;
+
+    // ✅ Succès
     console.log("✅ RSVP enregistré dans Supabase");
+    $("err").className = "erreur success";
+    $("err").textContent = "✅ Votre réponse a bien été enregistrée. Merci !";
+
+    // Reset du formulaire
+    $("nom").value = "";
+    $("mot").value = "";
+    $("nb").value = "1";
+    document.querySelector('input[name="pres"][value="oui"]').checked = true;
+    $("lbl-nb").style.display = "";
+
   } catch (err) {
+    // ❌ Erreur
     console.error("❌ Erreur Supabase :", err);
+    $("err").className = "erreur error";
+    $("err").textContent = "❌ Une erreur est survenue. Merci de réessayer ou de contacter la famille.";
   }
-
-  var msg = "Bonjour, c'est " + nom + ". " +
-    (oui
-      ? "Je confirme ma présence au mariage de Nathan et Faouzio (" + nb + " personne(s))."
-      : "Je ne pourrai malheureusement pas être présent(e) au mariage de Nathan et Faouzio.") +
-    (mot ? "\n\n" + mot : "");
-
-  window.open("https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg), "_blank");
 
   btn.disabled = false;
   btn.textContent = originalLabel;
