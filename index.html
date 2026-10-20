@@ -31,17 +31,20 @@ a{color:inherit}
 .btn.ghost{background:transparent;color:var(--or-fonce)}
 .btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--or-clair);outline-offset:3px}
 
-/* ===== ÉCRAN ACCÈS RESTREINT ===== */
+/* ===== ÉCRAN ACCÈS RESTREINT (responsive + safe-area) ===== */
 #restrictedScreen{
   position:fixed;inset:0;z-index:1000;
   display:flex;align-items:center;justify-content:center;
-  padding:1.4rem;
+  padding:calc(1.4rem + env(safe-area-inset-top)) 1.4rem calc(1.4rem + env(safe-area-inset-bottom));
   background:radial-gradient(ellipse at 50% 0,#2a261d 0,#1d1a14 70%);
   color:#efe7d3;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 .restricted-box{
   width:100%;max-width:420px;text-align:center;
-  padding:2.6rem 1.8rem 2.2rem;
+  padding:clamp(2rem,7vw,2.6rem) clamp(1.2rem,5vw,1.8rem);
+  margin:auto;
   background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));
   border:1px solid rgba(184,146,74,.4);
   border-radius:16px;
@@ -196,7 +199,6 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
   .env .carte span{font-size:.95rem}
 }
 @media (max-width:380px){
-  .restricted-box{padding:2.2rem 1.4rem 1.8rem}
   .restricted-title{font-size:1.6rem}
   .hero h1{font-size:clamp(2.2rem,13vw,3rem)}
   .env{width:94vw}
