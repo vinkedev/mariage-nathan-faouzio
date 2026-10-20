@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Nathan &amp; Faouzia — Invitation de mariage</title>
-<meta name="description" content="Nathan et Faouzia vous invitent à leur mariage le samedi 28 novembre 2026 à Ouagadougou.">
-<meta property="og:title" content="Nathan & Faouzia — Invitation de mariage">
-<meta property="og:description" content="Samedi 28 novembre 2026 · Ouagadougou. Ouvrez votre invitation.">
+<title>Accès Restreint — Nathan &amp; Faouzia</title>
+<meta name="description" content="Accès restreint.">
+<meta property="og:title" content="Accès Restreint">
+<meta property="og:description" content="Veuillez contacter le responsable pour la réactivation.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#1d1a14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,9 +19,8 @@
   --serif:"Cormorant Garamond",Georgia,serif; --sans:"Jost",system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:var(--sans);font-weight:300;font-size:1rem;line-height:1.65;color:var(--encre);background:var(--ivoire);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body.locked{overflow:hidden}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);font-weight:300;font-size:1rem;line-height:1.65;color:var(--encre);background:var(--nuit);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.1}
 .or{background:linear-gradient(135deg,var(--or-clair),var(--or) 50%,var(--or-fonce));-webkit-background-clip:text;background-clip:text;color:transparent}
 .wrap{max-width:720px;margin:0 auto;padding:0 1.4rem}
@@ -30,8 +29,51 @@ a{color:inherit}
 .btn:hover{filter:brightness(1.08)}
 .btn:active{transform:scale(.97)}
 .btn.ghost{background:transparent;color:var(--or-fonce)}
-.btn.sm{padding:.5rem 1.1rem;font-size:.85rem}
 .btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--or-clair);outline-offset:3px}
+
+/* ===== ÉCRAN ACCÈS RESTREINT ===== */
+#restrictedScreen{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  padding:1.4rem;
+  background:radial-gradient(ellipse at 50% 0,#2a261d 0,#1d1a14 70%);
+  color:#efe7d3;
+}
+.restricted-box{
+  width:100%;max-width:420px;text-align:center;
+  padding:2.6rem 1.8rem 2.2rem;
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));
+  border:1px solid rgba(184,146,74,.4);
+  border-radius:16px;
+  box-shadow:0 30px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(230,205,139,.15);
+  backdrop-filter:blur(4px);
+  animation:fadeIn .8s ease both;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.restricted-icon{
+  width:64px;height:64px;margin:0 auto 1.2rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:1.6rem;
+  background:radial-gradient(circle at 35% 30%,#f1dc9c,#b8924a 60%,#7a5c22);
+  box-shadow:0 8px 24px rgba(184,146,74,.45);
+}
+.restricted-mono{
+  font:italic 1.8rem var(--serif);
+  letter-spacing:.05em;margin-bottom:.4rem;
+}
+.restricted-title{
+  font:500 clamp(1.7rem,7vw,2.2rem) var(--serif);
+  color:#fbf8f1;margin-bottom:1rem;
+  letter-spacing:.01em;
+}
+.restricted-text{
+  font-size:clamp(.92rem,3.8vw,1rem);
+  color:#c9bfa6;line-height:1.7;
+  max-width:22em;margin:0 auto;
+}
+
+/* ===== SITE COMPLET (caché tant que accès restreint) ===== */
+#site{display:none}
+#site.visible{display:block}
 
 /* Enveloppe d'ouverture */
 #enveloppe{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;padding:2rem 1.4rem;background:var(--nuit);transition:opacity .6s ease .9s,visibility 0s 1.5s}
@@ -45,8 +87,6 @@ a{color:inherit}
 .env.ouverte .rabat{transform:rotateX(180deg)}
 .env.ouverte .carte{transform:translateY(-35%) scale(1.04)}
 .env.ouverte .sceau{opacity:0}
-
-/* Sceau */
 .sceau{position:absolute;left:50%;top:58%;width:78px;height:78px;margin:-39px 0 0 -39px;border-radius:50%;z-index:4;cursor:pointer;border:0;
   background:radial-gradient(circle at 35% 30%,#f1dc9c,#b8924a 60%,#7a5c22);box-shadow:0 4px 14px rgba(0,0,0,.4),0 0 0 0 rgba(230,205,139,.7);font:italic 500 1.5rem var(--serif);color:#5a4216;
   transition:opacity .3s;animation:respire 2.1s ease-in-out infinite}
@@ -55,7 +95,6 @@ a{color:inherit}
 .sceau:focus-visible{outline:3px solid #fff;outline-offset:4px}
 @keyframes onde{0%{transform:scale(.82);opacity:.95}100%{transform:scale(1.55);opacity:0}}
 @keyframes respire{0%,100%{box-shadow:0 4px 14px rgba(0,0,0,.4),0 0 0 0 rgba(230,205,139,.55)}50%{box-shadow:0 4px 14px rgba(0,0,0,.4),0 0 22px 6px rgba(230,205,139,.45)}}
-
 .consigne{max-width:22em;text-align:center;font-size:.98rem;letter-spacing:.05em;color:var(--or-clair);animation:scintille 1.9s ease-in-out infinite}
 .consigne .fleche{display:block;font-size:1.6rem;line-height:1;margin-bottom:.35rem;color:var(--or-clair);animation:monte 1.4s ease-in-out infinite}
 @keyframes monte{0%,100%{transform:translateY(2px);opacity:.55}50%{transform:translateY(-7px);opacity:1}}
@@ -63,8 +102,8 @@ a{color:inherit}
 
 /* Hero */
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:4rem 1.4rem calc(3rem + env(safe-area-inset-bottom));
-  background:radial-gradient(ellipse at 50% 0,#fff 0,var(--ivoire) 65%);border-bottom:1px solid var(--trait)}
-.mono{width:84px;height:84px;border-radius:50%;border:1px solid var(--or);display:grid;place-items:center;font:italic 1.7rem var(--serif);margin-bottom:1.6rem;outline:1px solid var(--or-clair);outline-offset:5px;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;transition:transform .2s ease}
+  background:radial-gradient(ellipse at 50% 0,#fff 0,var(--ivoire) 65%);border-bottom:1px solid var(--trait);color:var(--encre)}
+.mono{width:84px;height:84px;border-radius:50%;border:1px solid var(--or);display:grid;place-items:center;font:italic 1.7rem var(--serif);margin-bottom:1.6rem;outline:1px solid var(--or-clair);outline-offset:5px;cursor:pointer;user-select:none;-webkit-user-select:none;transition:transform .2s ease}
 .mono:active{transform:scale(.92)}
 .hero p.ligne{font:italic clamp(1rem,4.2vw,1.3rem) var(--serif);color:var(--doux);max-width:20em;padding:0 .3rem}
 .hero h1{font-size:clamp(2.6rem,14vw,7rem);margin:.5rem 0;letter-spacing:-.01em}
@@ -84,8 +123,6 @@ section{padding:4.5rem 0}
 section h2{font-size:clamp(1.9rem,7vw,2.8rem);text-align:center;margin-bottom:.6rem;padding:0 .3rem}
 .sous{text-align:center;color:var(--doux);margin-bottom:2.4rem;padding:0 .5rem;font-size:clamp(.92rem,3.6vw,1rem)}
 .trait{width:70px;height:1px;background:var(--or);margin:1rem auto 0}
-
-/* Programme */
 .sombre{background:var(--nuit);color:#efe7d3}
 .sombre h2{color:var(--or-clair)}
 .sombre .sous{color:#b9ae94}
@@ -97,9 +134,7 @@ section h2{font-size:clamp(1.9rem,7vw,2.8rem);text-align:center;margin-bottom:.6
 .frise .h{font:500 clamp(1.7rem,6.5vw,2.1rem) var(--serif);color:var(--or-clair);line-height:1}
 .frise h3{font-size:clamp(1.2rem,4.6vw,1.45rem);margin:.3rem 0 .15rem}
 .frise p{color:#c9bfa6;font-size:clamp(.9rem,3.6vw,1rem)}
-
-/* Bouton localisation */
-.map-btn{display:inline-flex;align-items:center;gap:.4rem;margin-top:.7rem;padding:.45rem .95rem;font:500 .82rem var(--sans);letter-spacing:.03em;color:var(--or-clair);background:rgba(184,146,74,.12);border:1px solid rgba(184,146,74,.45);border-radius:999px;text-decoration:none;transition:all .2s ease;-webkit-tap-highlight-color:transparent}
+.map-btn{display:inline-flex;align-items:center;gap:.4rem;margin-top:.7rem;padding:.45rem .95rem;font:500 .82rem var(--sans);letter-spacing:.03em;color:var(--or-clair);background:rgba(184,146,74,.12);border:1px solid rgba(184,146,74,.45);border-radius:999px;text-decoration:none;transition:all .2s ease}
 .map-btn:hover,.map-btn:active{background:rgba(184,146,74,.25);border-color:var(--or-clair);color:#fff;transform:translateY(-1px)}
 .map-btn span{font-size:.9rem;line-height:1}
 
@@ -123,11 +158,11 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--or-fonce
 form .btn{justify-self:center;margin-top:.4rem;min-height:48px;padding:.95rem 2.2rem}
 form .btn:disabled{opacity:.6;cursor:wait}
 
-footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-bottom));border-top:1px solid var(--trait)}
+footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-bottom));border-top:1px solid var(--trait);color:var(--encre);background:var(--ivoire)}
 .verset{max-width:34em;margin:0 auto 1.6rem;font:italic clamp(1rem,4vw,1.15rem)/1.55 var(--serif);color:var(--doux);padding:0 .3rem}
 .signature{font:italic clamp(1.6rem,6.5vw,2rem) var(--serif)}
 
-/* ===== MODALE LOGIN ADMIN ===== */
+/* Modale admin */
 .admin-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:1.2rem;background:rgba(29,26,20,.85);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
 .admin-modal.open{opacity:1;visibility:visible}
 .admin-modal__box{background:var(--blanc);border-radius:14px;width:100%;max-width:400px;padding:2rem 1.5rem;box-shadow:0 30px 80px rgba(0,0,0,.5);border-top:4px solid var(--or);text-align:center;position:relative;transform:translateY(20px);transition:transform .35s cubic-bezier(.2,.7,.3,1);max-height:90vh;overflow-y:auto}
@@ -142,7 +177,6 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
 .admin-modal .btn{width:100%;margin-top:.6rem;min-height:48px}
 .admin-modal__err{color:#a3352b;font-size:.85rem;min-height:1.2em;margin-top:.6rem}
 
-/* ====== MOBILE ====== */
 @media (max-width:600px){
   .wrap{padding:0 1.1rem}
   section{padding:3.2rem 0}
@@ -156,139 +190,163 @@ footer{text-align:center;padding:3rem 1.4rem calc(3.5rem + env(safe-area-inset-b
   .frise li{padding:0 0 2rem 1rem}
   .frise li::before{left:-1.25rem}
   .frise::before{left:.3rem}
-  .map-btn{font-size:.78rem;padding:.4rem .85rem}
-  form{padding:0}
-  .choix span{padding:.85rem .5rem}
   .env{width:min(92vw,420px)}
   .sceau{width:70px;height:70px;margin:-35px 0 0 -35px;font-size:1.35rem}
   .consigne{font-size:.9rem;padding:0 .8rem}
   .env .carte span{font-size:.95rem}
 }
-
 @media (max-width:380px){
+  .restricted-box{padding:2.2rem 1.4rem 1.8rem}
+  .restricted-title{font-size:1.6rem}
   .hero h1{font-size:clamp(2.2rem,13vw,3rem)}
-  .compte b{font-size:1.35rem}
-  .compte span{font-size:.62rem}
   .env{width:94vw}
   .sceau{width:64px;height:64px;margin:-32px 0 0 -32px;font-size:1.25rem}
-  .env .carte span{font-size:.88rem}
 }
-
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
-<body class="locked">
+<body>
 
-<div id="enveloppe" role="dialog" aria-label="Ouverture de l'invitation">
-  <div class="env" id="env">
-    <div class="corps"></div>
-    <div class="carte">
-      <span>Les grandes familles <strong>Ekoumé</strong> et <strong>Savadogo</strong> ont l'immense honneur de vous inviter au Mariage de leurs enfants</span>
-    </div>
-    <div class="rabat"></div>
-    <button class="sceau" id="sceau" aria-label="Cliquez sur le sceau pour ouvrir l'invitation">N&amp;F</button>
+<!-- ============================================================
+     INTERRUPTEUR PRINCIPAL
+     - SITE_OUVERT = false → SEULE la carte "Accès Restreint" s'affiche
+     - SITE_OUVERT = true  → LE SITE COMPLET s'affiche (invitation)
+     ============================================================ -->
+
+<!-- ===== ÉCRAN ACCÈS RESTREINT ===== -->
+<div id="restrictedScreen" role="dialog" aria-modal="true" aria-label="Accès restreint">
+  <div class="restricted-box">
+    <div class="restricted-icon">🔒</div>
+    <div class="restricted-mono or">N&amp;F</div>
+    <h1 class="restricted-title">Accès Restreint</h1>
+    <p class="restricted-text">
+      Veuillez contacter le responsable pour la réactivation. Merci.
+    </p>
   </div>
-  <p class="consigne"><span class="fleche">↑</span>Touchez le sceau doré « N&amp;F » pour ouvrir l'invitation</p>
 </div>
 
-<header class="hero">
-  <div class="mono or" id="monoAdmin">N&amp;F</div>
-  <p class="ligne">Les grandes familles Ekoumé et Savadogo ont l'immense honneur de vous inviter au Mariage de leurs enfants</p>
-  <h1 class="or">Nathan<em>&amp;</em>Faouzia</h1>
-  <p class="date">Samedi 28 novembre 2026</p>
-  <p class="ville">Ouagadougou, Burkina Faso</p>
-  <div class="compte" aria-hidden="true">
-    <div><b id="cj">0</b><span>jours</span></div>
-    <div><b id="ch">0</b><span>heures</span></div>
-    <div><b id="cm">0</b><span>min</span></div>
-    <div><b id="cs">0</b><span>sec</span></div>
-  </div>
-  <div class="cta">
-    <a class="btn" href="#rsvp">Confirmer ma présence</a>
-  </div>
-</header>
+<!-- ===== SITE COMPLET (caché tant que accès restreint) ===== -->
+<div id="site">
 
-<section id="programme" class="sombre">
-  <div class="wrap">
-    <h2>Le programme</h2>
-    <p class="sous">Samedi 28 novembre 2026</p>
-    <ol class="frise">
-      <li>
-        <div class="h">09h00</div>
-        <h3>Cérémonie civile</h3>
-        <p>Mairie de Saaba</p>
-        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Mairie+de+Saaba+Burkina+Faso" target="_blank" rel="noopener">
-          <span>📍</span> Voir la localisation
-        </a>
-      </li>
-      <li>
-        <div class="h">10h00</div>
-        <h3>Bénédiction nuptiale</h3>
-        <p>Église centrale des Assemblées de Dieu de Saaba</p>
-        <a class="map-btn" href="https://www.google.com/maps/place/9HFJ%2B6CG+AD+Saaba+Eglise+centrale,+Ouagadougou/@12.3730687,-1.4189239,16z" target="_blank" rel="noopener">
-          <span>📍</span> Voir la localisation
-        </a>
-      </li>
-      <li>
-        <div class="h">12h30</div>
-        <h3>Lunch d'honneur</h3>
-        <p>Salle Televideo, Dassasgho</p>
-        <a class="map-btn" href="https://www.google.com/maps/place/9GMM%2B56V+Tele-Vie-Deo,+Av.+du+Mus%C3%A9e+national,+Dassasgo,+Ouagadougou/@12.3829973,-1.4669594,17z" target="_blank" rel="noopener">
-          <span>📍</span> Voir la localisation
-        </a>
-      </li>
-    </ol>
-  </div>
-</section>
-
-<section id="rsvp">
-  <div class="wrap">
-    <h2>Confirmez votre présence</h2>
-    <div class="trait"></div>
-    <p class="sous" style="margin-top:1rem">Votre réponse nous aide à organiser l'accueil de chacun.</p>
-    <form id="form" novalidate>
-      <label>Nom et prénom
-        <input id="nom" autocomplete="name" placeholder="Ex. Awa Ouédraogo" required>
-      </label>
-      <div>
-        <div style="font-size:.9rem;color:var(--doux);margin-bottom:.3rem">Serez-vous des nôtres ?</div>
-        <div class="choix">
-          <label><input type="radio" name="pres" value="oui" checked><span>Avec joie</span></label>
-          <label><input type="radio" name="pres" value="non"><span>Je ne pourrai pas</span></label>
-        </div>
+  <div id="enveloppe" role="dialog" aria-label="Ouverture de l'invitation">
+    <div class="env" id="env">
+      <div class="corps"></div>
+      <div class="carte">
+        <span>Les grandes familles <strong>Ekoumé</strong> et <strong>Savadogo</strong> ont l'immense honneur de vous inviter au Mariage de leurs enfants</span>
       </div>
-      <label id="lbl-nb">Nombre de personnes (vous compris)
-        <select id="nb"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
-      </label>
-      <label>Un mot pour les mariés (facultatif)
-        <textarea id="mot" rows="3"></textarea>
-      </label>
-      <p class="erreur" id="err" role="alert"></p>
-      <button class="btn" type="submit">Envoyer</button>
-    </form>
+      <div class="rabat"></div>
+      <button class="sceau" id="sceau" aria-label="Cliquez sur le sceau pour ouvrir l'invitation">N&amp;F</button>
+    </div>
+    <p class="consigne"><span class="fleche">↑</span>Touchez le sceau doré « N&amp;F » pour ouvrir l'invitation</p>
   </div>
-</section>
 
-<footer>
-  <p class="verset">« C'est pourquoi l'homme quittera son père et sa mère, et s'attachera à sa femme, et les deux deviendront une seule chair. Ainsi ils ne sont plus deux, mais ils sont une seule chair. Que l'homme donc ne sépare pas ce que Dieu a joint. » Mathieu 19:5-6</p>
-  <p class="signature or">Nathan &amp; Faouzia</p>
-</footer>
+  <header class="hero">
+    <div class="mono or" id="monoAdmin">N&amp;F</div>
+    <p class="ligne">Les grandes familles Ekoumé et Savadogo ont l'immense honneur de vous inviter au Mariage de leurs enfants</p>
+    <h1 class="or">Nathan<em>&amp;</em>Faouzia</h1>
+    <p class="date">Samedi 28 novembre 2026</p>
+    <p class="ville">Ouagadougou, Burkina Faso</p>
+    <div class="compte" aria-hidden="true">
+      <div><b id="cj">0</b><span>jours</span></div>
+      <div><b id="ch">0</b><span>heures</span></div>
+      <div><b id="cm">0</b><span>min</span></div>
+      <div><b id="cs">0</b><span>sec</span></div>
+    </div>
+    <div class="cta">
+      <a class="btn" href="#rsvp">Confirmer ma présence</a>
+    </div>
+  </header>
 
-<!-- ===== MODALE LOGIN ADMIN ===== -->
-<div class="admin-modal" id="adminModal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
-  <div class="admin-modal__box">
-    <button class="admin-modal__close" id="adminClose" aria-label="Fermer">✕</button>
-    <div class="admin-modal__icon">🔐</div>
-    <h3 id="adminTitle">Espace Admin</h3>
-    <p class="admin-modal__sub">Mariage Nathan &amp; Faouzia</p>
-    <input type="password" id="adminPwd" placeholder="Mot de passe" autocomplete="current-password">
-    <button class="btn" id="adminSubmit">Entrer</button>
-    <p class="admin-modal__err" id="adminErr"></p>
+  <section id="programme" class="sombre">
+    <div class="wrap">
+      <h2>Le programme</h2>
+      <p class="sous">Samedi 28 novembre 2026</p>
+      <ol class="frise">
+        <li>
+          <div class="h">09h00</div>
+          <h3>Cérémonie civile</h3>
+          <p>Mairie de Saaba</p>
+          <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Mairie+de+Saaba+Burkina+Faso" target="_blank" rel="noopener">
+            <span>📍</span> Voir la localisation
+          </a>
+        </li>
+        <li>
+          <div class="h">10h00</div>
+          <h3>Bénédiction nuptiale</h3>
+          <p>Église centrale des Assemblées de Dieu de Saaba</p>
+          <a class="map-btn" href="https://www.google.com/maps/place/9HFJ%2B6CG+AD+Saaba+Eglise+centrale,+Ouagadougou/@12.3730687,-1.4189239,16z" target="_blank" rel="noopener">
+            <span>📍</span> Voir la localisation
+          </a>
+        </li>
+        <li>
+          <div class="h">12h30</div>
+          <h3>Lunch d'honneur</h3>
+          <p>Salle Televideo, Dassasgho</p>
+          <a class="map-btn" href="https://www.google.com/maps/place/9GMM%2B56V+Tele-Vie-Deo,+Av.+du+Mus%C3%A9e+national,+Dassasgo,+Ouagadougou/@12.3829973,-1.4669594,17z" target="_blank" rel="noopener">
+            <span>📍</span> Voir la localisation
+          </a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="rsvp">
+    <div class="wrap">
+      <h2>Confirmez votre présence</h2>
+      <div class="trait"></div>
+      <p class="sous" style="margin-top:1rem">Votre réponse nous aide à organiser l'accueil de chacun.</p>
+      <form id="form" novalidate>
+        <label>Nom et prénom
+          <input id="nom" autocomplete="name" placeholder="Ex. Awa Ouédraogo" required>
+        </label>
+        <div>
+          <div style="font-size:.9rem;color:var(--doux);margin-bottom:.3rem">Serez-vous des nôtres ?</div>
+          <div class="choix">
+            <label><input type="radio" name="pres" value="oui" checked><span>Avec joie</span></label>
+            <label><input type="radio" name="pres" value="non"><span>Je ne pourrai pas</span></label>
+          </div>
+        </div>
+        <label id="lbl-nb">Nombre de personnes (vous compris)
+          <select id="nb"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </label>
+        <label>Un mot pour les mariés (facultatif)
+          <textarea id="mot" rows="3"></textarea>
+        </label>
+        <p class="erreur" id="err" role="alert"></p>
+        <button class="btn" type="submit">Envoyer</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p class="verset">« C'est pourquoi l'homme quittera son père et sa mère, et s'attachera à sa femme, et les deux deviendront une seule chair. Ainsi ils ne sont plus deux, mais ils sont une seule chair. Que l'homme donc ne sépare pas ce que Dieu a joint. » Mathieu 19:5-6</p>
+    <p class="signature or">Nathan &amp; Faouzia</p>
+  </footer>
+
+  <div class="admin-modal" id="adminModal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <div class="admin-modal__box">
+      <button class="admin-modal__close" id="adminClose" aria-label="Fermer">✕</button>
+      <div class="admin-modal__icon">🔐</div>
+      <h3 id="adminTitle">Espace Admin</h3>
+      <p class="admin-modal__sub">Mariage Nathan &amp; Faouzia</p>
+      <input type="password" id="adminPwd" placeholder="Mot de passe" autocomplete="current-password">
+      <button class="btn" id="adminSubmit">Entrer</button>
+      <p class="admin-modal__err" id="adminErr"></p>
+    </div>
   </div>
-</div>
+
+</div><!-- /#site -->
 
 <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
+/* ============================================================
+   ⚙️  INTERRUPTEUR PRINCIPAL DU SITE
+   ------------------------------------------------------------
+   false = ACCÈS RESTREINT  → SEULE la carte s'affiche (client pas payé)
+   true  = SITE OUVERT      → invitation complète accessible (client payé)
+   ============================================================ */
+var SITE_OUVERT = false;
+
 /* ===== SUPABASE ===== */
 var SUPABASE_URL = "https://otdiywrvzappbmjfkkyi.supabase.co";
 var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90ZGl5d3J2emFwcGJtamZra3lpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2MTQyMDcsImV4cCI6MjA4NTE5MDIwN30.O5gHqJF1SCvpu19Z0OFHhQsT_ZmeIFbuEu-bpBZXXtY";
@@ -296,140 +354,163 @@ var db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* ===== MOT DE PASSE ADMIN ===== */
 var ADMIN_PASSWORD = "Nathan-faouzia-2026";
-/* ============================== */
 
 var $ = function (id) { return document.getElementById(id); };
 
-// Ouverture de l'enveloppe
-$("sceau").addEventListener("click", function () {
-  $("enveloppe").classList.add("ouverte");
-  $("env").classList.add("ouverte");
-  document.body.classList.remove("locked");
-  window.scrollTo(0, 0);
-});
+/* ============================================================
+   INITIALISATION : accès restreint OU site complet
+   ============================================================ */
+(function initAccess() {
+  var restricted = $("restrictedScreen");
+  var site = $("site");
 
-// ===== TRIPLE-CLIC SUR LE CERCLE N&F → MODALE ADMIN =====
-var clickCount = 0;
-var clickTimer = null;
-$("monoAdmin").addEventListener("click", function () {
-  clickCount++;
-  clearTimeout(clickTimer);
-  clickTimer = setTimeout(function () { clickCount = 0; }, 800);
-  if (clickCount >= 3) {
-    clickCount = 0;
-    openAdminModal();
-  }
-});
-
-function openAdminModal() {
-  $("adminModal").classList.add("open");
-  $("adminErr").textContent = "";
-  $("adminPwd").value = "";
-  setTimeout(function () { $("adminPwd").focus(); }, 250);
-}
-function closeAdminModal() {
-  $("adminModal").classList.remove("open");
-  $("adminPwd").value = "";
-  $("adminErr").textContent = "";
-}
-$("adminClose").addEventListener("click", closeAdminModal);
-$("adminModal").addEventListener("click", function (e) {
-  if (e.target === $("adminModal")) closeAdminModal();
-});
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape" && $("adminModal").classList.contains("open")) closeAdminModal();
-});
-
-function tryAdminLogin() {
-  var pwd = $("adminPwd").value.trim();
-  if (pwd === ADMIN_PASSWORD) {
-    sessionStorage.setItem("nf_admin", "1");
-    window.location.href = "admin-mariage.html";
+  if (SITE_OUVERT) {
+    restricted.style.display = "none";
+    site.classList.add("visible");
+    document.body.style.background = "var(--ivoire)";
+    document.body.classList.add("locked");
   } else {
-    $("adminErr").textContent = "Mot de passe incorrect";
-    $("adminPwd").value = "";
-    $("adminPwd").focus();
+    restricted.style.display = "flex";
+    site.classList.remove("visible");
   }
-}
-$("adminSubmit").addEventListener("click", tryAdminLogin);
-$("adminPwd").addEventListener("keydown", function (e) {
-  if (e.key === "Enter") tryAdminLogin();
-});
+})();
 
-// Compte à rebours (28 nov. 2026, 09h00 — heure du Burkina = UTC)
-var cible = Date.UTC(2026, 10, 28, 9, 0, 0);
-function tic() {
-  var d = Math.max(0, cible - Date.now());
-  var j = Math.floor(d / 864e5); d -= j * 864e5;
-  var h = Math.floor(d / 36e5);  d -= h * 36e5;
-  var m = Math.floor(d / 6e4);   d -= m * 6e4;
-  $("cj").textContent = j;
-  $("ch").textContent = ("0" + h).slice(-2);
-  $("cm").textContent = ("0" + m).slice(-2);
-  $("cs").textContent = ("0" + Math.floor(d / 1000)).slice(-2);
-}
-tic(); setInterval(tic, 1000);
+/* ============================================================
+   SCRIPTS DU SITE (ne s'exécutent que si SITE_OUVERT = true)
+   ============================================================ */
+if (SITE_OUVERT) {
 
-// Choix "je ne pourrai pas" → cache le nombre de personnes
-document.querySelectorAll('input[name="pres"]').forEach(function (r) {
-  r.addEventListener("change", function () {
-    var non = document.querySelector('input[name="pres"]:checked').value === "non";
-    $("lbl-nb").style.display = non ? "none" : "";
+  // Ouverture de l'enveloppe
+  $("sceau").addEventListener("click", function () {
+    $("enveloppe").classList.add("ouverte");
+    $("env").classList.add("ouverte");
+    document.body.classList.remove("locked");
+    window.scrollTo(0, 0);
   });
-});
 
-// ===== RSVP → SUPABASE =====
-$("form").addEventListener("submit", async function (e) {
-  e.preventDefault();
+  // Triple-clic sur N&F → modale admin
+  var clickCount = 0;
+  var clickTimer = null;
+  $("monoAdmin").addEventListener("click", function () {
+    clickCount++;
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(function () { clickCount = 0; }, 800);
+    if (clickCount >= 3) {
+      clickCount = 0;
+      openAdminModal();
+    }
+  });
 
-  var nom = $("nom").value.trim();
-  if (!nom) {
-    $("err").className = "erreur error";
-    $("err").textContent = "Indiquez votre nom pour que nous puissions vous identifier.";
-    $("nom").focus();
-    return;
+  function openAdminModal() {
+    $("adminModal").classList.add("open");
+    $("adminErr").textContent = "";
+    $("adminPwd").value = "";
+    setTimeout(function () { $("adminPwd").focus(); }, 250);
   }
+  function closeAdminModal() {
+    $("adminModal").classList.remove("open");
+    $("adminPwd").value = "";
+    $("adminErr").textContent = "";
+  }
+  $("adminClose").addEventListener("click", closeAdminModal);
+  $("adminModal").addEventListener("click", function (e) {
+    if (e.target === $("adminModal")) closeAdminModal();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && $("adminModal").classList.contains("open")) closeAdminModal();
+  });
 
-  var oui = document.querySelector('input[name="pres"]:checked').value === "oui";
-  var nb = oui ? parseInt($("nb").value, 10) : 0;
-  var mot = $("mot").value.trim();
+  function tryAdminLogin() {
+    var pwd = $("adminPwd").value.trim();
+    if (pwd === ADMIN_PASSWORD) {
+      sessionStorage.setItem("nf_admin", "1");
+      window.location.href = "admin-mariage.html";
+    } else {
+      $("adminErr").textContent = "Mot de passe incorrect";
+      $("adminPwd").value = "";
+      $("adminPwd").focus();
+    }
+  }
+  $("adminSubmit").addEventListener("click", tryAdminLogin);
+  $("adminPwd").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") tryAdminLogin();
+  });
 
-  var btn = e.target.querySelector("button[type=submit]");
-  var originalLabel = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = "Envoi en cours…";
-  $("err").textContent = "";
-  $("err").className = "erreur";
+  // Compte à rebours
+  var cible = Date.UTC(2026, 10, 28, 9, 0, 0);
+  function tic() {
+    var d = Math.max(0, cible - Date.now());
+    var j = Math.floor(d / 864e5); d -= j * 864e5;
+    var h = Math.floor(d / 36e5);  d -= h * 36e5;
+    var m = Math.floor(d / 6e4);   d -= m * 6e4;
+    $("cj").textContent = j;
+    $("ch").textContent = ("0" + h).slice(-2);
+    $("cm").textContent = ("0" + m).slice(-2);
+    $("cs").textContent = ("0" + Math.floor(d / 1000)).slice(-2);
+  }
+  tic(); setInterval(tic, 1000);
 
-  try {
-    var res = await db.from("rsvp_mariage").insert({
-      nom: nom,
-      presence: oui,
-      nombre_personnes: nb,
-      mot: mot || null
+  // Choix "je ne pourrai pas" → cache le nombre de personnes
+  document.querySelectorAll('input[name="pres"]').forEach(function (r) {
+    r.addEventListener("change", function () {
+      var non = document.querySelector('input[name="pres"]:checked').value === "non";
+      $("lbl-nb").style.display = non ? "none" : "";
     });
+  });
 
-    if (res.error) throw res.error;
+  // RSVP → Supabase
+  $("form").addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-    console.log("✅ RSVP enregistré dans Supabase");
-    $("err").className = "erreur success";
-    $("err").textContent = "✅ Votre réponse a bien été enregistrée. Merci !";
+    var nom = $("nom").value.trim();
+    if (!nom) {
+      $("err").className = "erreur error";
+      $("err").textContent = "Indiquez votre nom pour que nous puissions vous identifier.";
+      $("nom").focus();
+      return;
+    }
 
-    $("nom").value = "";
-    $("mot").value = "";
-    $("nb").value = "1";
-    document.querySelector('input[name="pres"][value="oui"]').checked = true;
-    $("lbl-nb").style.display = "";
+    var oui = document.querySelector('input[name="pres"]:checked').value === "oui";
+    var nb = oui ? parseInt($("nb").value, 10) : 0;
+    var mot = $("mot").value.trim();
 
-  } catch (err) {
-    console.error("❌ Erreur Supabase :", err);
-    $("err").className = "erreur error";
-    $("err").textContent = "❌ Une erreur est survenue. Merci de réessayer ou de contacter la famille.";
-  }
+    var btn = e.target.querySelector("button[type=submit]");
+    var originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = "Envoi en cours…";
+    $("err").textContent = "";
+    $("err").className = "erreur";
 
-  btn.disabled = false;
-  btn.textContent = originalLabel;
-});
+    try {
+      var res = await db.from("rsvp_mariage").insert({
+        nom: nom,
+        presence: oui,
+        nombre_personnes: nb,
+        mot: mot || null
+      });
+
+      if (res.error) throw res.error;
+
+      $("err").className = "erreur success";
+      $("err").textContent = "✅ Votre réponse a bien été enregistrée. Merci !";
+
+      $("nom").value = "";
+      $("mot").value = "";
+      $("nb").value = "1";
+      document.querySelector('input[name="pres"][value="oui"]').checked = true;
+      $("lbl-nb").style.display = "";
+
+    } catch (err) {
+      console.error("❌ Erreur Supabase :", err);
+      $("err").className = "erreur error";
+      $("err").textContent = "❌ Une erreur est survenue. Merci de réessayer ou de contacter la famille.";
+    }
+
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  });
+
+}
 </script>
 </body>
 </html>
